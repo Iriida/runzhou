@@ -684,17 +684,31 @@
         const poemText = t(scene.scrollContent);
         const chars = poemText.split('');
         let index = 0;
+
+        // 判断是否为手机端（宽度小于 600px）
+        const isMobile = window.innerWidth < 600;
+
         if (currentLang === 'zh') {
+            // 中文：竖排
             scrollPoem.style.writingMode = 'vertical-rl';
-            scrollPoem.style.fontSize = '2.2rem';
-            scrollPoem.style.lineHeight = '2.8';
-            scrollPoem.style.minHeight = '200px';
+            scrollPoem.style.fontSize = isMobile ? '1.5rem' : '2.2rem';
+            scrollPoem.style.lineHeight = isMobile ? '2.4' : '2.8';
+            scrollPoem.style.minHeight = isMobile ? '320px' : '350px';  // 手机端增加高度
+            scrollPoem.style.maxHeight = isMobile ? '75vh' : 'none';
+            scrollPoem.style.overflowY = 'auto';   // 允许滚动
+            scrollPoem.style.padding = '0.5rem 1rem';
         } else {
+            // 英法文：横排
             scrollPoem.style.writingMode = 'horizontal-tb';
-            scrollPoem.style.fontSize = '1.8rem';
+            scrollPoem.style.fontSize = isMobile ? '1.4rem' : '1.8rem';
             scrollPoem.style.lineHeight = '2.2';
             scrollPoem.style.minHeight = 'auto';
+            scrollPoem.style.maxHeight = '70vh';
+            scrollPoem.style.overflowY = 'auto';
+            scrollPoem.style.whiteSpace = 'pre-wrap';
+            scrollPoem.style.wordBreak = 'break-word';
         }
+
         scrollOverlay.classList.add('active');
         const speed = 80;
         scrollTimer = setInterval(() => {
@@ -706,6 +720,7 @@
                 scrollTimer = null;
             }
         }, speed);
+
         scrollCloseBtn.onclick = function() {
             if (scrollTimer) { clearInterval(scrollTimer); scrollTimer = null; }
             scrollOverlay.classList.remove('active');
