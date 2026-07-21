@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        /* ===== 完整样式（与之前相同）===== */
+        /* ===== 完整样式 ===== */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; background-color: #e6ede0; background-image: radial-gradient(circle at 20% 30%, #eaf3e5 0%, #d4dcc8 100%); font-family: "LXGW WenKai", "霞鹜文楷", "标小篆", "KaiTi", "楷体", serif; }
         body { display: flex; align-items: center; justify-content: center; padding: 1rem; }
@@ -26,13 +26,19 @@
 
         #preGameForm { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(60,70,50,0.5); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 350; padding: 1.5rem; border-radius: inherit; }
         #preGameForm.active { display: flex; }
-        .form-card { background: #f5f7ed; padding: 2rem 2.2rem; border-radius: 16px; max-width: 440px; width: 100%; color: #2d3d24; box-shadow: 0 12px 36px rgba(0,0,0,0.4); border: 1px solid #b3c9a8; }
+        .form-card { background: #f5f7ed; padding: 2rem 2.2rem; border-radius: 16px; max-width: 440px; width: 100%; color: #2d3d24; box-shadow: 0 12px 36px rgba(0,0,0,0.4); border: 1px solid #b3c9a8; max-height: 90vh; overflow-y: auto; }
         .form-card h2 { text-align: center; font-family: "标小篆","LXGW WenKai",serif; letter-spacing: 4px; border-bottom: 2px solid #b3c9a8; padding-bottom: 0.8rem; margin-bottom: 1.5rem; }
         .form-card label { display: block; margin: 0.8rem 0 0.3rem; font-weight: bold; }
         .form-card select { width: 100%; padding: 0.6rem; border: 1px solid #a3c6a0; border-radius: 8px; background: #fafff5; font-family: inherit; font-size: 1rem; color: #2d3d24; }
         .form-card .btn-primary { background: #7f9f7a; color: #f6efe3; border: none; padding: 0.8rem; border-radius: 40px; cursor: pointer; width: 100%; font-size: 1.2rem; margin-top: 1.5rem; font-family: inherit; transition: background 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         .form-card .btn-primary:hover { background: #5e7a56; }
+        .form-card .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
         .form-card .privacy-note { font-size: 0.8rem; color: #6a8f63; text-align: center; margin-top: 1rem; }
+        .consent-area { display: flex; align-items: flex-start; gap: 0.6rem; margin: 1rem 0 0.2rem; font-size: 0.95rem; }
+        .consent-area input[type="checkbox"] { width: 1.2rem; height: 1.2rem; margin-top: 0.1rem; accent-color: #7f9f7a; flex-shrink: 0; cursor: pointer; }
+        .consent-area label { font-weight: normal; margin: 0; cursor: pointer; }
+        .consent-area .info-link { color: #5e7a56; text-decoration: underline; cursor: pointer; font-weight: bold; }
+        .consent-area .info-link:hover { color: #3d5a35; }
 
         .top-section { flex-shrink: 0; position: relative; z-index: 2; margin-bottom: 0.3rem; }
         h1 { text-align: left; font-size: 2rem; font-weight: normal; letter-spacing: 6px; color: #3d5a35; margin-left: 1.2rem; margin-bottom: 0.1rem; text-shadow: 1px 1px 0 #e4edd9; font-family: "标小篆","LXGW WenKai",serif; display: inline-block; border-bottom: 2px solid #a3c6a0; padding-bottom: 0.1rem; }
@@ -80,21 +86,7 @@
 
         #scrollOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(30,40,25,0.5); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 250; border-radius: inherit; padding: 1.5rem; box-sizing: border-box; }
         #scrollOverlay.active { display: flex; }
-        .scroll-panel {
-            background: #f5f7ed;
-            padding: 2.5rem 2rem 1.8rem 2rem;
-            border: 6px solid #b3c9a8;
-            border-radius: 16px;
-            box-shadow: 0 16px 48px rgba(0,0,0,0.6);
-            max-width: 92%;
-            max-height: 85%;
-            overflow-y: auto;          /* 新增 */
-            position: relative;
-            animation: fadeIn 0.5s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        .scroll-panel { background: #f5f7ed; padding: 2.5rem 2rem 1.8rem 2rem; border: 6px solid #b3c9a8; border-radius: 16px; box-shadow: 0 16px 48px rgba(0,0,0,0.6); max-width: 92%; max-height: 85%; overflow-y: auto; position: relative; animation: fadeIn 0.5s ease; display: flex; flex-direction: column; align-items: center; }
         .scroll-poem { font-size: 1.9rem; line-height: 2.8; padding: 0.5rem 0.8rem; color: #1f2a1a; letter-spacing: 0.2em; font-family: "标小篆","LXGW WenKai",serif; white-space: pre-line; display: inline-block; text-align: left; background: rgba(255,247,235,0.3); border-radius: 8px; min-height: auto; min-width: 100px; }
         .scroll-title { font-size: 1.4rem; margin-bottom: 0.8rem; color: #5e7a56; font-weight: bold; font-family: "LXGW WenKai","KaiTi",serif; letter-spacing: 4px; }
         .scroll-close-btn { margin-top: 1.5rem; background: #7f9f7a; color: #f6efe3; border: none; padding: 0.6rem 2.5rem; border-radius: 40px; font-family: inherit; font-size: 1.2rem; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
@@ -118,7 +110,6 @@
     </style>
 </head>
 <body>
-    <!-- HTML 结构 -->
     <div class="game-container" id="gameContainer">
         <div class="mask"></div>
         <!-- 封面 -->
@@ -146,8 +137,17 @@
                     <option value="9-12" selected>9-12岁 / 9-12 / 9-12 ans</option>
                     <option value="over12">12岁以上 / Over 12 / Plus de 12 ans</option>
                 </select>
+
+                <!-- 同意采集说明 -->
+                <div class="consent-area">
+                    <input type="checkbox" id="consentCheck" />
+                    <label for="consentCheck">
+                        我已阅读并同意 <span class="info-link" id="consentInfoLink">信息采集说明</span>
+                    </label>
+                </div>
+
                 <button class="btn-primary" id="enterGameBtn">开始旅程 →</button>
-                <div class="privacy-note">仅收集匿名统计数据</div>
+                <div class="privacy-note">仅收集匿名统计数据，用于优化游戏体验</div>
             </div>
         </div>
         <!-- 音效 -->
@@ -264,6 +264,8 @@
     const endingTitle = document.getElementById('endingTitle');
     const endingBody = document.getElementById('endingBody');
     const endingRestartBtn = document.getElementById('endingRestartBtn');
+    const consentCheck = document.getElementById('consentCheck');
+    const consentInfoLink = document.getElementById('consentInfoLink');
 
     // ===== 多语言工具 =====
     function t(obj) {
@@ -289,6 +291,85 @@
         bgmToggle.textContent = bgmOn ? t(uiTexts.bgmOff) : t(uiTexts.bgmOn);
         routeTag.textContent = t(uiTexts.routeTag);
     }
+
+    // ===== 显示信息采集说明（根据下拉框语言） =====
+    function showConsentInfo() {
+        const lang = langSelect.value; // 读取当前选中的语言
+        const info = {
+            zh: `尊敬的参与者，
+
+在您开始本次体验之前，请知悉以下信息：
+
+【调研目的】
+本次互动有声剧体验是上海外国语大学"沪声沪色"项目组开展的一项社会实践研究，旨在了解青少年对红色文化、江南文化、海派文化的认知现状、接受障碍与传播规律。您的参与将帮助我们更好地理解青少年群体对传统文化的感知方式，为本土文化的创造性传播提供实证依据。
+
+【数据采集内容】
+体验过程中，系统将自动记录以下信息：
+1. 您对文化符号的前置认知情况
+2. 您在剧情交互节点中的选择偏好
+3. 您对江南文化相关体验的感知反馈
+
+【数据使用与隐私保护】
+项目组承诺，所有采集数据仅用于学术研究与调研报告撰写，不作任何商业用途。
+数据以匿名化方式存储，不收集您的姓名、联系方式等个人身份信息。
+您有权随时退出体验，退出后数据将不被纳入分析。
+
+请注意，参与即代表同意以上内容。
+点击"开始体验"即代表您已阅读并同意以上说明。
+
+如有任何疑问，请联系项目组：laterlater002@qq.com`,
+
+            en: `Dear participant,
+
+Before you begin this experience, please be informed of the following:
+
+[Research Purpose]
+This interactive audio drama experience is a social practice study conducted by the "Hu Sheng Hu Se" (Shanghai Sound and Color) project team of Shanghai International Studies University. It aims to understand adolescents' current awareness, acceptance barriers, and dissemination patterns regarding red culture, Jiangnan culture, and Haipai (Shanghai-style) culture. Your participation will help us better understand how young people perceive traditional culture and provide empirical evidence for the creative dissemination of local culture.
+
+[Data Collected]
+During the experience, the system will automatically record the following information:
+1. Your prior knowledge of cultural symbols.
+2. Your choice preferences at interactive narrative nodes.
+3. Your perceptual feedback on experiences related to Jiangnan culture.
+
+[Data Use and Privacy Protection]
+The project team undertakes that all collected data will be used solely for academic research and survey report writing, and will not be used for any commercial purpose.
+Data will be stored anonymously; no personal identifying information such as your name or contact details will be collected.
+You have the right to withdraw from the experience at any time. Data from participants who withdraw will not be included in the analysis.
+
+Please note that participation implies your consent to the above.
+By clicking "Start Experience", you confirm that you have read and agree to the above statement.
+
+If you have any questions, please contact the project team at: laterlater002@qq.com`,
+
+            fr: `Cher(e) participant(e),
+
+Avant de commencer cette expérience, veuillez prendre connaissance des informations suivantes :
+
+[Objectif de l'étude]
+Cette expérience de théâtre audio interactif est une étude de pratique sociale menée par l'équipe du projet « Hu Sheng Hu Se » (Son et Couleur de Shanghai) de l'Université des Études Internationales de Shanghai. Elle vise à comprendre l'état actuel des connaissances, les obstacles à l'acceptation et les modes de diffusion, chez les jeunes, des cultures rouge, du Jiangnan et de style shanghaïen (Haipai). Votre participation nous aidera à mieux cerner la manière dont les jeunes perçoivent la culture traditionnelle et fournira des bases empiriques pour une diffusion créative de la culture locale.
+
+[Contenu des données collectées]
+Pendant l'expérience, le système enregistrera automatiquement les informations suivantes :
+1. Votre connaissance préalable des symboles culturels.
+2. Vos préférences de choix aux nœuds interactifs du récit.
+3. Vos retours de perception concernant les expériences liées à la culture du Jiangnan.
+
+[Utilisation des données et protection de la vie privée]
+L'équipe du projet s'engage à utiliser toutes les données collectées exclusivement à des fins de recherche académique et de rédaction de rapports d'étude, et en aucun cas à des fins commerciales.
+Les données sont stockées de manière anonyme ; aucune information personnelle identifiante, telle que votre nom ou vos coordonnées, n'est collectée.
+Vous avez le droit de vous retirer de l'expérience à tout moment. Les données des participants qui se retirent ne seront pas incluses dans l'analyse.
+
+Veuillez noter que la participation vaut acceptation des conditions ci-dessus.
+En cliquant sur « Commencer l'expérience », vous confirmez avoir lu et accepté les présentes conditions.
+
+Pour toute question, veuillez contacter l'équipe du projet : laterlater002@qq.com`
+        };
+        alert(info[lang] || info.zh);
+    }
+
+    // 绑定说明链接点击
+    consentInfoLink.addEventListener('click', showConsentInfo);
 
     // ===== 知识卡片数据 =====
     const knowledgeData = {
@@ -428,23 +509,23 @@
         },
         // ---- 第一幕：茶馆 ----
         s1: { text: { zh: '北宋建中靖国元年，五月。润州城外，金山寺下，有家"江心茶馆"。', en: 'The first year of Jianzhong Jingguo, fifth month. Outside Runzhou, under Jinshan Temple, stood the "Riverheart Teahouse".', fr: 'Première année de Jianzhong Jingguo, cinquième mois. Hors de Runzhou, au pied du temple Jinshan, se trouvait la "Maison de thé au Cœur de la Rivière".' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's2' }], leftChar: null, rightChar: null, chapter: { zh: '· 第一幕 · 茶馆', en: '· Act 1 · The Teahouse', fr: '· Acte 1 · La Maison de thé' }, bg: 'images/teahouse.jpg' },
-        s2: { text: { zh: '十二岁的李小满在这里当学徒，端茶倒水讨生活。', en: 'Li Xiaoman, twelve, was an apprentice there, serving tea to make a living.', fr: 'Li Xiaoman, douze ans, y était apprenti, servant le thé pour gagner sa vie.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's3' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, chapter: { zh: '· 第一幕 · 学徒', en: '· Act 1 · Apprentice', fr: '· Acte 1 · Apprenti' }, bg: 'images/teahouse.jpg' },
-        s3: { text: { zh: '小满有个本事——记性好，见过的客人做什么活计、有什么特点，都能记下来。', en: 'Xiaoman had a gift—an excellent memory. He could recall every guest, their trade and peculiarities.', fr: 'Xiaoman avait un don : une mémoire remarquable. Il se rappelait de chaque client, de son métier, de ses particularités.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's4' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, chapter: { zh: '· 第一幕 · 记忆', en: '· Act 1 · Memory', fr: '· Acte 1 · Mémoire' }, bg: 'images/teahouse.jpg' },
+        s2: { text: { zh: '十二岁的李小满在这里当学徒，端茶倒水讨生活。', en: 'Li Xiaoman, twelve, was an apprentice there, serving tea to make a living.', fr: 'Li Xiaoman, douze ans, y était apprenti, servant le thé pour gagner sa vie.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's3' }], leftChar: null, rightChar: null, chapter: { zh: '· 第一幕 · 学徒', en: '· Act 1 · Apprentice', fr: '· Acte 1 · Apprenti' }, bg: 'images/teahouse.jpg' },
+        s3: { text: { zh: '小满有个本事——记性好，见过的客人做什么活计、有什么特点，都能记下来。', en: 'Xiaoman had a gift—an excellent memory. He could recall every guest, their trade and peculiarities.', fr: 'Xiaoman avait un don : une mémoire remarquable. Il se rappelait de chaque client, de son métier, de ses particularités.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's4' }], leftChar: null, rightChar: null, chapter: { zh: '· 第一幕 · 记忆', en: '· Act 1 · Memory', fr: '· Acte 1 · Mémoire' }, bg: 'images/teahouse.jpg' },
         s4: { text: { zh: '那天，一个病弱的老人和一个背着画板的少年走进了茶馆。', en: 'That day, a frail old man and a young man with a drawing board entered the teahouse.', fr: 'Ce jour-là, un vieillard maladif et un jeune homme portant une planche à dessin entrèrent dans la maison de thé.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's5' }], leftChar: null, rightChar: null, chapter: { zh: '· 第一幕 · 来客', en: '· Act 1 · Visitors', fr: '· Acte 1 · Visiteurs' }, bg: 'images/teahouse.jpg' },
         s5: { text: { zh: '老人和少年在角落坐下。老人轻声咳嗽，少年则翻动画板，在纸上描画着什么。', en: 'The old man and the young man took a seat in the corner. The old man coughed softly, while the young man flipped his drawing board, sketching something on paper.', fr: 'Le vieillard et le jeune homme s\'installèrent dans un coin. Le vieillard toussa doucement, tandis que le jeune homme tournait sa planche, gribouillant sur le papier.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's6' }], leftChar: null, rightChar: null, chapter: { zh: '· 第一幕 · 落座', en: '· Act 1 · Seated', fr: '· Acte 1 · Installés' }, bg: 'images/teahouse.jpg' },
         s6: { text: { zh: '王掌柜从柜台后面探出头来，冲小满喊道：小满！那位老先生要一盏"阳羡茶"，快些！', en: 'Owner Wang leaned over the counter and called to Xiaoman: Xiaoman! That old gentleman wants a cup of "Yangxian tea"—be quick!', fr: 'Le patron Wang se pencha par-dessus le comptoir et appela Xiaoman : Xiaoman ! Ce vieux monsieur veut une tasse de "thé Yangxian", dépêche-toi !' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's7' }], leftChar: null, rightChar: null, popup: [{ type: 'knowledge', id: 'yangxian' }], chapter: { zh: '· 第一幕 · 阳羡茶', en: '· Act 1 · Yangxian Tea', fr: '· Acte 1 · Thé Yangxian' }, bg: 'images/teahouse.jpg' },
-        s7: { text: { zh: '小满应道：来了！便赶紧去取茶。', en: 'Xiaoman replied: Coming! and hurried to fetch the tea.', fr: 'Xiaoman répondit : J\'arrive ! et s\'empressa d\'aller chercher le thé.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's8' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, chapter: { zh: '· 第一幕 · 取茶', en: '· Act 1 · Fetching Tea', fr: '· Acte 1 · Chercher le thé' }, bg: 'images/teahouse.jpg' },
-        s8: { text: { zh: '小满端上茶，忍不住好奇，多看了几眼少年的画板。', en: 'Xiaoman served the tea, unable to resist glancing at the young man\'s board.', fr: 'Xiaoman servit le thé, curieux, et regarda la planche du jeune homme.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's9' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第一幕 · 端茶', en: '· Act 1 · Serving Tea', fr: '· Acte 1 · Servir le thé' }, bg: 'images/teahouse.jpg' },
-        s9: { text: { zh: '少年察觉到他的目光，抬头笑道：我不喝茶，我画画。你看这江景——金山寺在江心，船来船往，多好看！我要去汴京学画。我已经画了三十七个船夫了。', en: 'The young man noticed and looked up with a smile: I don\'t drink tea, I paint. Look at this river scene—Jinshan Temple stands in the midst of the river, boats come and go, so beautiful! I\'m going to Bianjing to study painting. I\'ve already drawn thirty-seven boatmen.', fr: 'Le jeune homme le remarqua et leva la tête en souriant : Je ne bois pas de thé, je dessine. Regarde ce paysage—le temple Jinshan au milieu, les bateaux vont et viennent, c\'est magnifique ! Je vais à Bianjing pour étudier la peinture. J\'ai déjà dessiné trente-sept bateliers.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's10' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, popup: [{ type: 'figure', id: 'zhang_zeduan' }], chapter: { zh: '· 第一幕 · 画画', en: '· Act 1 · Drawing', fr: '· Acte 1 · Dessiner' }, bg: 'images/teahouse.jpg' },
-        s10: { text: { zh: '他指着画上一个人说：你看——这个撑船的，左边用力，右边虚握，因为是逆水。', en: 'He pointed to one: Look—this punters, he pushes with his left and holds loosely with his right, because he\'s going against the current.', fr: 'Il montra l\'un d\'eux : Regarde—celui-ci qui pousse, il met la force à gauche et tient souplement à droite, car il remonte le courant.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's11' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第一幕 · 细节', en: '· Act 1 · Detail', fr: '· Acte 1 · Détail' }, bg: 'images/teahouse.jpg' },
-        s11: { text: { zh: '小满脱口而出：那是老周头，他右手有六根手指，握篙特别稳！', en: 'Xiaoman blurted: That\'s Old Zhou! He has six fingers on his right hand and grips the pole especially steady!', fr: 'Xiaoman laissa échapper : C\'est le vieux Zhou ! Il a six doigts à la main droite et tient la perche avec une stabilité parfaite !' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's12' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, chapter: { zh: '· 第一幕 · 记忆', en: '· Act 1 · Memory', fr: '· Acte 1 · Mémoire' }, bg: 'images/teahouse.jpg' },
-        s12: { text: { zh: '老人听了，轻轻咳嗽一声，微笑道：好记性。小友，你叫什么？', en: 'The old man coughed lightly and smiled: What a fine memory. Little friend, what is your name?', fr: 'Le vieillard toussa légèrement et sourit : Quelle bonne mémoire. Petit ami, comment t\'appelles-tu ?' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's13' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, popup: [{ type: 'figure', id: 'su_shi' }], chapter: { zh: '· 第一幕 · 问名', en: '· Act 1 · Asking Name', fr: '· Acte 1 · Demander le nom' }, bg: 'images/teahouse.jpg' },
-        s13: { text: { zh: '小满恭敬地回答：回老先生，我叫李小满，是这茶馆的学徒。', en: 'Xiaoman replied respectfully: Sir, my name is Li Xiaoman, an apprentice here.', fr: 'Xiaoman répondit respectueusement : Monsieur, je m\'appelle Li Xiaoman, apprenti ici.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's14' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, chapter: { zh: '· 第一幕 · 回答', en: '· Act 1 · Reply', fr: '· Acte 1 · Réponse' }, bg: 'images/teahouse.jpg' },
-        s14: { text: { zh: '老人点了点头：小满……好名字。老夫苏轼，刚从海南回来，路过此地。能遇见你们，倒是缘分。', en: 'The old man nodded: Xiaoman... a good name. I am Su Shi, just returned from Hainan, passing through. Meeting you both is fate.', fr: 'Le vieillard hocha la tête : Xiaoman... un beau nom. Je suis Su Shi, de retour du Hainan, de passage ici. Vous rencontrer est le destin.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's15' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, popup: [{ type: 'knowledge', id: 'su_bei_gui' }], chapter: { zh: '· 第一幕 · 自我介绍', en: '· Act 1 · Introduction', fr: '· Acte 1 · Présentation' }, bg: 'images/teahouse.jpg' },
-        s15: { text: { zh: '张择端眼睛一亮：原来是苏大人！苏大人，您说我这画到了汴京能入画院吗？', en: 'Zhang Zeduan\'s eyes lit up: So it is Master Su! Do you think my paintings can get into the Academy?', fr: 'Zhang Zeduan s\'illumina : Alors c\'est Maître Su ! Maître Su, pensez-vous que mes peintures pourront entrer à l\'Académie ?' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's16' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第一幕 · 问画', en: '· Act 1 · Asking About Painting', fr: '· Acte 1 · Question sur la peinture' }, bg: 'images/teahouse.jpg' },
-        s16: { text: { zh: '苏轼端详了一会儿画，点头说：画得好。但贵人多爱富贵典雅的宣和体，你爱画舟车市桥、寻常百姓……这恐怕不合他们的口味。', en: 'Su Shi studied the drawing and nodded: Well painted. But noblemen favor the elegant Xuanhe style; you love painting boats, carts, markets, bridges and common folk... that might not please them.', fr: 'Su Shi étudia le dessin et hocha la tête : Bien peint. Mais les gens de la cour aiment le style Xuanhe, riche et élégant ; vous aimez peindre les bateaux, les marchés, les ponts et les gens simples... Cela risque de ne pas leur plaire.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's17' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第一幕 · 点评', en: '· Act 1 · Critique', fr: '· Acte 1 · Critique' }, bg: 'images/teahouse.jpg' },
-        s17: { text: { zh: '张择端却倔强地说：我就画这江上所有的人！以后，我要画一幅大的，画尽天下市井！', en: 'Zhang Zeduan insisted: I will paint every person on this river! In the future, I want to paint a big one, capturing all the markets and streets of the world!', fr: 'Zhang Zeduan insista : Je peindrai tous les gens de cette rivière ! Plus tard, je veux en faire une grande, pour saisir tous les marchés et les rues du monde !' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's18' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第一幕 · 倔强', en: '· Act 1 · Determination', fr: '· Acte 1 · Détermination' }, bg: 'images/teahouse.jpg' },
-        s18: { text: { zh: '苏轼笑了，却咳了两声：好志气。你倒让老夫想起了自己年轻时……（他若有所思，望向江面）', en: 'Su Shi laughed, then coughed: Fine ambition. It reminds me of my own youth... (he grew pensive, gazing at the river)', fr: 'Su Shi rit, puis toussa : Belle ambition. Cela me rappelle ma jeunesse... (il devint pensif, regardant la rivière)' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's19' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第一幕 · 回忆', en: '· Act 1 · Memory', fr: '· Acte 1 · Mémoire' }, bg: 'images/teahouse.jpg' },
+        s7: { text: { zh: '来了！', en: 'Coming! ', fr: ' J\'arrive ! ' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's8' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, chapter: { zh: '· 第一幕 · 取茶', en: '· Act 1 · Fetching Tea', fr: '· Acte 1 · Chercher le thé' }, bg: 'images/teahouse.jpg' },
+        s8: { text: { zh: '小满端上茶，忍不住好奇，多看了几眼少年的画板。', en: 'Xiaoman served the tea, unable to resist glancing at the young man\'s board.', fr: 'Xiaoman servit le thé, curieux, et regarda la planche du jeune homme.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's9' }], leftChar: null, rightChar: null, chapter: { zh: '· 第一幕 · 端茶', en: '· Act 1 · Serving Tea', fr: '· Acte 1 · Servir le thé' }, bg: 'images/teahouse.jpg' },
+        s9: { text: { zh: '(察觉到他的目光，抬头笑道)我不喝茶，我画画。你看这江景——金山寺在江心，船来船往，多好看！我要去汴京学画。我已经画了三十七个船夫了。', en: '(noticed and looked up with a smile) I don\'t drink tea, I paint. Look at this river scene—Jinshan Temple stands in the midst of the river, boats come and go, so beautiful! I\'m going to Bianjing to study painting. I\'ve already drawn thirty-seven boatmen.', fr: '(Le jeune homme le remarqua et leva la tête en souriant ) Je ne bois pas de thé, je dessine. Regarde ce paysage—le temple Jinshan au milieu, les bateaux vont et viennent, c\'est magnifique ! Je vais à Bianjing pour étudier la peinture. J\'ai déjà dessiné trente-sept bateliers.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's10' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, popup: [{ type: 'figure', id: 'zhang_zeduan' }], chapter: { zh: '· 第一幕 · 画画', en: '· Act 1 · Drawing', fr: '· Acte 1 · Dessiner' }, bg: 'images/teahouse.jpg' },
+        s10: { text: { zh: '你看——这个撑船的，左边用力，右边虚握，因为是逆水。', en: 'Look—this punters, he pushes with his left and holds loosely with his right, because he\'s going against the current.', fr: ' Regarde—celui-ci qui pousse, il met la force à gauche et tient souplement à droite, car il remonte le courant.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's11' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第一幕 · 细节', en: '· Act 1 · Detail', fr: '· Acte 1 · Détail' }, bg: 'images/teahouse.jpg' },
+        s11: { text: { zh: '(脱口而出)那是老周头，他右手有六根手指，握篙特别稳！', en: '(blurted) That\'s Old Zhou! He has six fingers on his right hand and grips the pole especially steady!', fr: '( laissa échapper ) C\'est le vieux Zhou ! Il a six doigts à la main droite et tient la perche avec une stabilité parfaite !' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's12' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, chapter: { zh: '· 第一幕 · 记忆', en: '· Act 1 · Memory', fr: '· Acte 1 · Mémoire' }, bg: 'images/teahouse.jpg' },
+        s12: { text: { zh: '(轻轻咳嗽一声，微笑道)好记性。小友，你叫什么？', en: '(coughed lightly and smiled) What a fine memory. Little friend, what is your name?', fr: '(Le vieillard toussa légèrement et sourit ) Quelle bonne mémoire. Petit ami, comment t\'appelles-tu ?' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's13' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, popup: [{ type: 'figure', id: 'su_shi' }], chapter: { zh: '· 第一幕 · 问名', en: '· Act 1 · Asking Name', fr: '· Acte 1 · Demander le nom' }, bg: 'images/teahouse.jpg' },
+        s13: { text: { zh: '回老先生，我叫李小满，是这茶馆的学徒。', en: 'Sir, my name is Li Xiaoman, an apprentice here.', fr: ' Monsieur, je m\'appelle Li Xiaoman, apprenti ici.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's14' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, chapter: { zh: '· 第一幕 · 回答', en: '· Act 1 · Reply', fr: '· Acte 1 · Réponse' }, bg: 'images/teahouse.jpg' },
+        s14: { text: { zh: '(点了点头)小满……好名字。老夫苏轼，刚从海南回来，路过此地。能遇见你们，倒是缘分。', en: '(nodded:)Xiaoman... a good name. I am Su Shi, just returned from Hainan, passing through. Meeting you both is fate.', fr: '(hocha la tête ) Xiaoman... un beau nom. Je suis Su Shi, de retour du Hainan, de passage ici. Vous rencontrer est le destin.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's15' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, popup: [{ type: 'knowledge', id: 'su_bei_gui' }], chapter: { zh: '· 第一幕 · 自我介绍', en: '· Act 1 · Introduction', fr: '· Acte 1 · Présentation' }, bg: 'images/teahouse.jpg' },
+        s15: { text: { zh: '原来是苏大人！苏大人，您说我这画到了汴京能入画院吗？', en: 'So it is Master Su! Do you think my paintings can get into the Academy?', fr: 'Alors c\'est Maître Su ! Maître Su, pensez-vous que mes peintures pourront entrer à l\'Académie ?' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's16' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第一幕 · 问画', en: '· Act 1 · Asking About Painting', fr: '· Acte 1 · Question sur la peinture' }, bg: 'images/teahouse.jpg' },
+        s16: { text: { zh: '(端详了一会儿画，点头说)画得好。但贵人多爱富贵典雅的宣和体，你爱画舟车市桥、寻常百姓……这恐怕不合他们的口味。', en: '(studied the drawing and nodded) Well painted. But noblemen favor the elegant Xuanhe style; you love painting boats, carts, markets, bridges and common folk... that might not please them.', fr: '(étudia le dessin et hocha la tête ) Bien peint. Mais les gens de la cour aiment le style Xuanhe, riche et élégant ; vous aimez peindre les bateaux, les marchés, les ponts et les gens simples... Cela risque de ne pas leur plaire.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's17' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第一幕 · 点评', en: '· Act 1 · Critique', fr: '· Acte 1 · Critique' }, bg: 'images/teahouse.jpg' },
+        s17: { text: { zh: '我就画这江上所有的人！以后，我要画一幅大的，画尽天下市井！', en: 'I will paint every person on this river! In the future, I want to paint a big one, capturing all the markets and streets of the world!', fr: 'Je peindrai tous les gens de cette rivière ! Plus tard, je veux en faire une grande, pour saisir tous les marchés et les rues du monde !' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's18' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第一幕 · 倔强', en: '· Act 1 · Determination', fr: '· Acte 1 · Détermination' }, bg: 'images/teahouse.jpg' },
+        s18: { text: { zh: '（笑了，却咳了两声）好志气。你倒让老夫想起了自己年轻时……（他若有所思，望向江面）', en: '（laughed, then coughed） Fine ambition. It reminds me of my own youth... (he grew pensive, gazing at the river)', fr: '（rit, puis toussa ） Belle ambition. Cela me rappelle ma jeunesse... (il devint pensif, regardant la rivière)' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's19' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第一幕 · 回忆', en: '· Act 1 · Memory', fr: '· Acte 1 · Mémoire' }, bg: 'images/teahouse.jpg' },
         // ---- 卷轴场景 ----
         s19: {
             type: 'scroll',
@@ -461,17 +542,17 @@
             rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }
         },
         s20: { text: { zh: '王掌柜从柜台后走出，端着一碟茶点：老先生，这是小店送您的。新做的定胜糕，尝尝。', en: 'Owner Wang stepped out from behind the counter, holding a plate of tea snacks: Master Su, a small gift from our teahouse. Fresh Dingsheng cakes, please try.', fr: 'Le patron Wang sortit de derrière le comptoir, portant une assiette de douceurs : Maître Su, un petit présent de notre maison. Des gâteaux Dingsheng tout frais, goûtez-les.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's21' }], leftChar: null, rightChar: null, popup: [{ type: 'knowledge', id: 'dingsheng' }], chapter: { zh: '· 第一幕 · 定胜糕', en: '· Act 1 · Dingsheng Cake', fr: '· Acte 1 · Gâteau Dingsheng' }, bg: 'images/teahouse.jpg' },
-        s21: { text: { zh: '苏轼笑：定胜糕……江南人做什么事都要讨个彩头。打仗要定胜，读书要定胜，连喝茶也要定胜。', en: 'Su Shi smiled: Dingsheng cakes... Jiangnan people always want an auspicious name for everything. Fighting a war—dingsheng, "certain victory"; studying—dingsheng; even drinking tea—dingsheng.', fr: 'Su Shi sourit : Gâteaux Dingsheng... Au Jiangnan, on cherche toujours un bon présage pour tout. Faire la guerre—dingsheng, "victoire certaine" ; étudier—dingsheng ; même boire du thé—dingsheng.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's22' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第一幕 · 彩头', en: '· Act 1 · Auspicious', fr: '· Acte 1 · Bon présage' }, bg: 'images/teahouse.jpg' },
+        s21: { text: { zh: '定胜糕……江南人做什么事都要讨个彩头。打仗要定胜，读书要定胜，连喝茶也要定胜。', en: 'Dingsheng cakes... Jiangnan people always want an auspicious name for everything. Fighting a war—dingsheng, "certain victory"; studying—dingsheng; even drinking tea—dingsheng.', fr: 'Gâteaux Dingsheng... Au Jiangnan, on cherche toujours un bon présage pour tout. Faire la guerre—dingsheng, "victoire certaine" ; étudier—dingsheng ; même boire du thé—dingsheng.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's22' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第一幕 · 彩头', en: '· Act 1 · Auspicious', fr: '· Acte 1 · Bon présage' }, bg: 'images/teahouse.jpg' },
         // ---- 第二幕 ----
-        s22: { text: { zh: '三日后，江边。苏轼要登船去常州了。', en: 'Three days later, by the river. Su Shi was about to board for Changzhou.', fr: 'Trois jours plus tard, au bord de l\'eau. Su Shi allait embarquer pour Changzhou.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's23' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第二幕 · 江边', en: '· Act 2 · By the River', fr: '· Acte 2 · Au bord de l\'eau' }, bg: 'images/river.jpg' },
-        s23: { text: { zh: '张择端在画最后一幅江景——润州的运河口，杨柳，渔船，还有远处金山寺的塔影。', en: 'Zhang Zeduan painted his last river scene—the canal mouth, willows, fishing boats, and Jinshan pagoda in the distance.', fr: 'Zhang Zeduan peignait sa dernière vue—l\'embouchure du canal, les saules, les barques, et la pagode Jinshan au loin.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's24' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第二幕 · 画景', en: '· Act 2 · Painting Scene', fr: '· Acte 2 · Peindre le paysage' }, bg: 'images/river.jpg' },
-        s24: { text: { zh: '他皱着眉头，自言自语：船太多了……怎么安排才不乱呢？', en: 'He frowned, murmuring: So many boats... how to arrange them without chaos?', fr: 'Il fronça les sourcils, marmonnant : Tant de bateaux... comment les disposer sans désordre ?' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's25' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第二幕 · 困扰', en: '· Act 2 · Perplexity', fr: '· Acte 2 · Perplexité' }, bg: 'images/river.jpg' },
-        s25: { text: { zh: '小满凑过去，看了看画布，然后指着运河说：你看，运河南来北往的船，大船走中间，小船靠两边。挑担的农夫要上坡，得侧身让一让穿绸缎的商人。还有——那棵柳树，是润州的老柳了，春天的时候，整个码头都是柳絮。', en: 'Xiaoman came over, looked at the canvas, and pointed: Look, on the canal, big boats take the middle course, small boats stay to the sides. A farmer carrying a pole-load has to step sideways to let a silk-clad merchant pass. And that willow—that\'s the old willow of Runzhou. In spring, the whole dock is full of willow catkins.', fr: 'Xiaoman s\'approcha, regarda la toile et montra le canal : Regarde, les grands bateaux naviguent au milieu, les petits restent sur les côtés. Le paysan qui porte une palanche doit s\'écarter pour laisser passer le marchand vêtu de soie. Et ce saule—c\'est le vieux saule de Runzhou. Au printemps, tout le quai est plein de chatons.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's26' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, popup: [{ type: 'knowledge', id: 'jiangnan_canal' }], chapter: { zh: '· 第二幕 · 运河', en: '· Act 2 · Canal', fr: '· Acte 2 · Canal' }, bg: 'images/river.jpg' },
-        s26: { text: { zh: '张择端顿时眼睛发亮：对！对！运河、柳树、金山塔——这就是江南。多谢你帮我！', en: 'Zhang Zeduan\'s eyes brightened: Yes! Yes! The canal, the willows, the Jinshan pagoda—this is Jiangnan. Thank you for helping me!', fr: 'Zhang Zeduan s\'illumina : Oui ! Oui ! Le canal, les saules, la pagode Jinshan—c\'est le Jiangnan. Merci de m\'aider !' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's27' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第二幕 · 领悟', en: '· Act 2 · Realization', fr: '· Acte 2 · Réalisation' }, bg: 'images/river.jpg' },
-        s27: { text: { zh: '苏轼缓缓走来，手里拿着一个茶盏，盏中茶汤清亮。他说：两位小友，老夫今日要离开了，请你们喝一碗茶吧。', en: 'Su Shi approached slowly, holding a tea cup; the tea in the cup was clear and bright. He said: My two young friends, I must leave today. Let me offer you a bowl of tea.', fr: 'Su Shi s\'avança lentement, tenant une tasse de thé ; le thé dans la tasse était clair et lumineux. Il dit : Mes deux jeunes amis, je dois partir aujourd\'hui. Laissez-moi vous offrir un bol de thé.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's28' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第二幕 · 请茶', en: '· Act 2 · Offering Tea', fr: '· Acte 2 · Offrir du thé' }, bg: 'images/river.jpg' },
-        s28: { text: { zh: '小满犹豫：苏大人，这…… ', en: 'Xiaoman hesitated: Master Su, I... ', fr: 'Xiaoman hésita : Maître Su, je... ' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's280' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, chapter: { zh: '· 第二幕 · 接茶', en: '· Act 2 · Accepting Tea', fr: '· Acte 2 · Accepter le thé' }, bg: 'images/river.jpg' },
-        s280: { text: { zh: '张择端爽快接过：多谢苏大人。（轻抿一口）好茶！', en: 'Zhang Zeduan readily took it: Thank you, Master Su. (Sips lightly) Fine tea!', fr: 'Zhang Zeduan l\'accepta franchement : Merci, Maître Su. (Il boit une petite gorgée) Quel bon thé !' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's29' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第二幕 · 接茶', en: '· Act 2 · Accepting Tea', fr: '· Acte 2 · Accepter le thé' }, bg: 'images/river.jpg' },
-        s29: { text: { zh: '苏轼笑，把茶盏递给小满：喝便是。说说你尝到了什么。', en: 'Su Shi smiled and passed the cup to Xiaoman: Just drink. Tell me, what do you taste?', fr: 'Su Shi sourit et tendit la tasse à Xiaoman : Bois, et dis-moi ce que tu goûtes.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's30' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第二幕 · 问味', en: '· Act 2 · Asking Taste', fr: '· Acte 2 · Demander le goût' }, bg: 'images/river.jpg' },
+        s22: { text: { zh: '三日后，江边。苏轼要登船去常州了。', en: 'Three days later, by the river. Su Shi was about to board for Changzhou.', fr: 'Trois jours plus tard, au bord de l\'eau. Su Shi allait embarquer pour Changzhou.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's23' }], leftChar: null, rightChar: null, chapter: { zh: '· 第二幕 · 江边', en: '· Act 2 · By the River', fr: '· Acte 2 · Au bord de l\'eau' }, bg: 'images/river.jpg' },
+        s23: { text: { zh: '张择端在画最后一幅江景——润州的运河口，杨柳，渔船，还有远处金山寺的塔影。', en: 'Zhang Zeduan painted his last river scene—the canal mouth, willows, fishing boats, and Jinshan pagoda in the distance.', fr: 'Zhang Zeduan peignait sa dernière vue—l\'embouchure du canal, les saules, les barques, et la pagode Jinshan au loin.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's24' }], leftChar: null, rightChar: null, chapter: { zh: '· 第二幕 · 画景', en: '· Act 2 · Painting Scene', fr: '· Acte 2 · Peindre le paysage' }, bg: 'images/river.jpg' },
+        s24: { text: { zh: '船太多了……怎么安排才不乱呢？', en: 'So many boats... how to arrange them without chaos?', fr: 'Tant de bateaux... comment les disposer sans désordre ?' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's25' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第二幕 · 困扰', en: '· Act 2 · Perplexity', fr: '· Acte 2 · Perplexité' }, bg: 'images/river.jpg' },
+        s25: { text: { zh: '(凑过去，看了看画布，然后指着运河说)你看，运河南来北往的船，大船走中间，小船靠两边。挑担的农夫要上坡，得侧身让一让穿绸缎的商人。还有——那棵柳树，是润州的老柳了，春天的时候，整个码头都是柳絮。', en: '(came over, looked at the canvas, and pointed) Look, on the canal, big boats take the middle course, small boats stay to the sides. A farmer carrying a pole-load has to step sideways to let a silk-clad merchant pass. And that willow—that\'s the old willow of Runzhou. In spring, the whole dock is full of willow catkins.', fr: '(s\'approcha, regarda la toile et montra le canal ) Regarde, les grands bateaux naviguent au milieu, les petits restent sur les côtés. Le paysan qui porte une palanche doit s\'écarter pour laisser passer le marchand vêtu de soie. Et ce saule—c\'est le vieux saule de Runzhou. Au printemps, tout le quai est plein de chatons.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's26' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, popup: [{ type: 'knowledge', id: 'jiangnan_canal' }], chapter: { zh: '· 第二幕 · 运河', en: '· Act 2 · Canal', fr: '· Acte 2 · Canal' }, bg: 'images/river.jpg' },
+        s26: { text: { zh: '对！对！运河、柳树、金山塔——这就是江南。多谢你帮我！', en: 'Yes! Yes! The canal, the willows, the Jinshan pagoda—this is Jiangnan. Thank you for helping me!', fr: 'Oui ! Oui ! Le canal, les saules, la pagode Jinshan—c\'est le Jiangnan. Merci de m\'aider !' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's27' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第二幕 · 领悟', en: '· Act 2 · Realization', fr: '· Acte 2 · Réalisation' }, bg: 'images/river.jpg' },
+        s27: { text: { zh: '(缓缓走来，手里拿着一个茶盏，盏中茶汤清亮)两位小友，老夫今日要离开了，请你们喝一碗茶吧。', en: '(approached slowly, holding a tea cup; the tea in the cup was clear and bright.) My two young friends, I must leave today. Let me offer you a bowl of tea.', fr: '(s\'avança lentement, tenant une tasse de thé ; le thé dans la tasse était clair et lumineux.)Mes deux jeunes amis, je dois partir aujourd\'hui. Laissez-moi vous offrir un bol de thé.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's28' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第二幕 · 请茶', en: '· Act 2 · Offering Tea', fr: '· Acte 2 · Offrir du thé' }, bg: 'images/river.jpg' },
+        s28: { text: { zh: '苏大人，这…… ', en: 'Master Su, I... ', fr: 'Maître Su, je... ' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's280' }], leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' }, rightChar: null, chapter: { zh: '· 第二幕 · 接茶', en: '· Act 2 · Accepting Tea', fr: '· Acte 2 · Accepter le thé' }, bg: 'images/river.jpg' },
+        s280: { text: { zh: '多谢苏大人。（轻抿一口）好茶！', en: 'Thank you, Master Su. (Sips lightly) Fine tea!', fr: 'Merci, Maître Su. (Il boit une petite gorgée) Quel bon thé !' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's29' }], leftChar: null, rightChar: { name: { zh: '张择端', en: 'Zhang Zeduan', fr: 'Zhang Zeduan' }, image: 'images/zhang.png' }, chapter: { zh: '· 第二幕 · 接茶', en: '· Act 2 · Accepting Tea', fr: '· Acte 2 · Accepter le thé' }, bg: 'images/river.jpg' },
+        s29: { text: { zh: '(笑，把茶盏递给小满)喝便是。说说你尝到了什么。', en: '(smiled and passed the cup to Xiaoman) Just drink. Tell me, what do you taste?', fr: '(sourit et tendit la tasse à Xiaoman ) Bois, et dis-moi ce que tu goûtes.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's30' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第二幕 · 问味', en: '· Act 2 · Asking Taste', fr: '· Acte 2 · Demander le goût' }, bg: 'images/river.jpg' },
         // ---- 交互节点1：茶味 ----
         s30: {
             type: 'single-choice',
@@ -491,10 +572,10 @@
             leftChar: { name: { zh: '李小满', en: 'Li Xiaoman', fr: 'Li Xiaoman' }, image: 'images/xiaoman.png' },
             rightChar: null
         },
-        s31: { text: { zh: '苏轼看着小满，点头说：你说得对。茶和人一样——不只有一种味道。苦的、甜的、清香的，都在同一盏里。', en: 'Su Shi looked at Xiaoman and nodded: You are right. Tea is like people—it has more than one flavor. Bitter, sweet, fresh—all within the same cup.', fr: 'Su Shi regarda Xiaoman et hocha la tête : Tu as raison. Le thé est comme les gens — il n\'a pas qu\'une seule saveur. Amer, sucré, frais, tout dans la même tasse.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's32' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第二幕 · 茶如人', en: '· Act 2 · Tea as People', fr: '· Acte 2 · Le thé comme les gens' }, bg: 'images/river.jpg' },
+        s31: { text: { zh: '你说得对。茶和人一样——不只有一种味道。苦的、甜的、清香的，都在同一盏里。', en: 'You are right. Tea is like people—it has more than one flavor. Bitter, sweet, fresh—all within the same cup.', fr: 'Tu as raison. Le thé est comme les gens — il n\'a pas qu\'une seule saveur. Amer, sucré, frais, tout dans la même tasse.' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's32' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第二幕 · 茶如人', en: '· Act 2 · Tea as People', fr: '· Acte 2 · Le thé comme les gens' }, bg: 'images/river.jpg' },
         // ---- 第三幕 ----
         s32: { text: { zh: '船夫喊：苏大人，船要开了！', en: 'The boatman shouted: Master Su, the boat is about to leave!', fr: 'Le batelier cria : Maître Su, le bateau va partir !' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's33' }], leftChar: null, rightChar: null, chapter: { zh: '· 第三幕 · 船将开', en: '· Act 3 · Boat Leaving', fr: '· Acte 3 · Départ du bateau' }, bg: 'images/river.jpg' },
-        s33: { text: { zh: '苏轼登船前，回头，看向小满，也看向屏幕前的人：小满，最后问你——你想活出怎样的人生？', en: 'Before boarding, Su Shi turned back to look at Xiaoman, and at the person in front of the screen: Xiaoman, one last question—What kind of life do you want to live?', fr: 'Avant d\'embarquer, Su Shi se retourna pour regarder Xiaoman, et la personne derrière l\'écran : Xiaoman, une dernière question — Quelle vie veux-tu vivre ?' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's34' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第三幕 · 人生之问', en: '· Act 3 · The Question of Life', fr: '· Acte 3 · La question de la vie' }, bg: 'images/river.jpg' },
+        s33: { text: { zh: '(回头，看向小满，也看向屏幕前的人)小满，最后问你——你想活出怎样的人生？', en: '(turned back to look at Xiaoman, and at the person in front of the screen) Xiaoman, one last question—What kind of life do you want to live?', fr: '(se retourna pour regarder Xiaoman, et la personne derrière l\'écran) Xiaoman, une dernière question — Quelle vie veux-tu vivre ?' }, options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's34' }], leftChar: null, rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }, chapter: { zh: '· 第三幕 · 人生之问', en: '· Act 3 · The Question of Life', fr: '· Acte 3 · La question de la vie' }, bg: 'images/river.jpg' },
         // ---- 交互节点2：人生回答 ----
         s34: {
             type: 'text',
@@ -685,20 +766,17 @@
         const chars = poemText.split('');
         let index = 0;
 
-        // 判断是否为手机端（宽度小于 600px）
         const isMobile = window.innerWidth < 600;
 
         if (currentLang === 'zh') {
-            // 中文：竖排
             scrollPoem.style.writingMode = 'vertical-rl';
             scrollPoem.style.fontSize = isMobile ? '1.5rem' : '2.2rem';
             scrollPoem.style.lineHeight = isMobile ? '2.4' : '2.8';
-            scrollPoem.style.minHeight = isMobile ? '320px' : '350px';  // 手机端增加高度
+            scrollPoem.style.minHeight = isMobile ? '320px' : '350px';
             scrollPoem.style.maxHeight = isMobile ? '75vh' : 'none';
-            scrollPoem.style.overflowY = 'auto';   // 允许滚动
+            scrollPoem.style.overflowY = 'auto';
             scrollPoem.style.padding = '0.5rem 1rem';
         } else {
-            // 英法文：横排
             scrollPoem.style.writingMode = 'horizontal-tb';
             scrollPoem.style.fontSize = isMobile ? '1.4rem' : '1.8rem';
             scrollPoem.style.lineHeight = '2.2';
@@ -776,14 +854,13 @@
         if (!sceneVisits[sceneId]) sceneVisits[sceneId] = 0;
     }
 
-    // ===== 提交数据（包含所有独立列） =====
+    // ===== 提交数据 =====
     async function submitGameData() {
         if (isGameFinished) return;
         isGameFinished = true;
         recordSceneDuration(currentSceneId);
         const totalDuration = (Date.now() - sessionStartTime) / 1000;
 
-        // 只提交表里实际存在的列
         const data = {
             player_language: currentLang,
             player_age_group: playerAge,
@@ -797,7 +874,6 @@
             node4_culture_post: playerChoices.node4_culture_post || ''
         };
 
-        // 可选：打印确认数据
         console.log('提交的数据：', data);
 
         try {
@@ -928,7 +1004,6 @@
             submitBtn.style.marginTop = '0.8rem';
             submitBtn.addEventListener('click', () => {
                 const checked = Array.from(container.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
-                // 存储到独立变量
                 if (currentSceneId === 's0') {
                     playerChoices.node0_culture_pre = checked.join(',');
                 } else if (currentSceneId === 's37') {
@@ -951,7 +1026,6 @@
                 btn.className = 'option-btn';
                 btn.textContent = t(opt.text);
                 btn.addEventListener('click', () => {
-                    // 存储到独立变量
                     if (currentSceneId === 's30') {
                         playerChoices.node1_tea_taste = opt.value;
                     } else if (currentSceneId === 's36') {
@@ -1092,7 +1166,6 @@
         isGameFinished = false;
         sessionStartTime = Date.now();
         currentSceneStartTime = Date.now();
-        // 重置玩家选择
         playerChoices = { node0_culture_pre: '', node1_tea_taste: '', node2_life_answer: '', node3_memory: '', node4_culture_post: '' };
         location.reload();
     }
@@ -1129,6 +1202,10 @@
     });
 
     enterGameBtn.addEventListener('click', function() {
+        if (!consentCheck.checked) {
+            alert(t({ zh: '请先阅读并同意信息采集说明。', en: 'Please read and agree to the data collection policy first.', fr: 'Veuillez d\'abord lire et accepter la politique de collecte de données.' }));
+            return;
+        }
         currentLang = langSelect.value;
         playerAge = ageSelect.value;
         preGameForm.classList.remove('active');
