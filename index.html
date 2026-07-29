@@ -326,6 +326,38 @@
             }
         }
 
+        /* ================================================================
+                   【手机端优化】去掉一层阴影 · Logo放大 · 简介下移
+                   ================================================================ */
+        @media (max-width:600px) {
+            /* 去掉品牌页自身的 inset 阴影，只保留 .game-container 的一层阴影 */
+            #brandPage {
+                box-shadow: none !important;
+            }
+            /* Logo 放大：从 58px → 80px */
+            .brand-logo-area img {
+                height: 80px !important;
+            }
+            /* 简介下移：增加 .brand-body 的上内边距 */
+            .brand-body {
+                padding-top: 1.2rem !important;
+            }
+            /* 微调简介底部间距，保持视觉平衡 */
+            .brand-intro {
+                margin-bottom: 0.8rem;
+            }
+        }
+
+        @media (max-width:400px) {
+            /* 超小屏 Logo 再放大：从 42px → 60px */
+            .brand-logo-area img {
+                height: 60px !important;
+            }
+            .brand-body {
+                padding-top: 0.8rem !important;
+            }
+        }
+
         .brand-footer-area {
             flex-shrink: 0;
             width: 100%;
