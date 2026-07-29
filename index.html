@@ -194,25 +194,21 @@
             flex-shrink: 0;
         }
 
-        /* ===== 问题容器 - 间距拉大 ===== */
         .brand-questions {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             gap: 2.4rem;
-            /* 从 1.4rem 增大到 2.4rem */
             width: 100%;
             max-width: 700px;
             margin: 0 auto;
             padding: 0.5rem 0;
         }
 
-        /* ===== 每个问题项 - 无框，无虚线 ===== */
         .question-item {
             background: transparent;
             border: none;
-            /* 去掉虚线边框 */
             box-shadow: none;
             padding: 0.6rem 0.2rem;
             cursor: pointer;
@@ -251,31 +247,82 @@
                 padding-top: 0.2rem;
             }
             .brand-intro {
-                font-size: 1.5rem;
-                max-height: none;
+                font-size: 1.0rem;
+                max-height: 150px;
                 padding: 0.5rem 0.8rem;
                 margin-bottom: 0.5rem;
             }
             .brand-questions {
-                gap: 4.0rem;
-                /* 移动端也拉大间距 */
+                gap: 2rem;
                 justify-content: center;
                 padding: 0.3rem 0;
                 flex: 1;
                 min-height: 50vh;
             }
             .question-item {
-                font-size: 2.0rem;
+                font-size: 1.1rem;
                 padding: 0.5rem 0.2rem;
             }
             .question-item .q-emoji {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
             }
             .question-item:nth-child(2) {
                 align-self: flex-end;
             }
             .brand-logo-area img {
-                height: 68px;
+                height: 58px;
+            }
+
+            /* ===== 修复标题与语言按钮重叠 ===== */
+            .brand-header {
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: nowrap;
+            }
+            .brand-title-center {
+                position: static;
+                transform: none;
+                flex: 1;
+                text-align: center;
+                font-size: 1.6rem;
+                letter-spacing: 4px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 0.3rem;
+            }
+            .brand-lang-wrap {
+                flex-shrink: 0;
+                margin-left: 0.3rem;
+            }
+            .brand-lang-wrap select {
+                font-size: 0.8rem;
+                padding: 0.2rem 1.6rem 0.2rem 0.6rem;
+                min-width: 60px;
+                background-position: right 0.4rem center;
+                padding-right: 1.8rem;
+            }
+            .brand-btn {
+                font-size: 1.2rem;
+                padding: 0.4rem 1.8rem;
+            }
+            .brand-btn .arrow-icon {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width:400px) {
+            .brand-title-center {
+                font-size: 1.2rem;
+                letter-spacing: 2px;
+            }
+            .brand-lang-wrap select {
+                font-size: 0.7rem;
+                min-width: 50px;
+                padding: 0.15rem 1.4rem 0.15rem 0.4rem;
+            }
+            .brand-logo-area img {
+                height: 42px;
             }
         }
 
@@ -348,7 +395,6 @@
 
         .question-popup-card {
             background: #5c5c5c;
-            /* 从 #4a4a4a 调浅到 #5c5c5c */
             color: #ffffff;
             border-left: 8px solid #888;
             border-radius: 0 16px 16px 0;
@@ -389,7 +435,6 @@
             color: #ffffff;
             transform: scale(1.2);
         }
-        /* 确保所有内容都是白色 */
         .question-popup-card,
         .question-popup-card h3,
         .question-popup-card div,
@@ -993,17 +1038,19 @@
                 padding: 1.2rem 1rem 1.8rem 1rem;
             }
             .brand-logo-area img {
-                height: 68px;
+                height: 58px;
             }
             .brand-title-center {
-                font-size: 2rem;
-                letter-spacing: 6px;
+                font-size: 1.6rem;
+                letter-spacing: 4px;
                 white-space: nowrap;
             }
             .brand-lang-wrap select {
-                font-size: 1.0rem;
-                padding: 0.2rem 2rem 0.2rem 0.8rem;
-                min-width: 80px;
+                font-size: 0.8rem;
+                padding: 0.2rem 1.6rem 0.2rem 0.6rem;
+                min-width: 60px;
+                background-position: right 0.4rem center;
+                padding-right: 1.8rem;
             }
             .brand-intro {
                 font-size: 1.0rem;
@@ -1019,7 +1066,7 @@
             }
             .brand-btn {
                 font-size: 1.2rem;
-                padding: 0.4rem 2rem;
+                padding: 0.4rem 1.8rem;
             }
             .character-left,
             .character-right {
@@ -1068,6 +1115,43 @@
                 padding: 1rem 1.2rem;
                 font-size: 0.9rem;
                 margin-top: 10px;
+            }
+            /* 修复标题与语言按钮重叠（已在上面媒体查询中覆盖） */
+            .brand-header {
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: nowrap;
+            }
+            .brand-title-center {
+                position: static;
+                transform: none;
+                flex: 1;
+                text-align: center;
+                font-size: 1.4rem;
+                letter-spacing: 2px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 0.2rem;
+            }
+            .brand-lang-wrap {
+                flex-shrink: 0;
+                margin-left: 0.3rem;
+            }
+        }
+
+        @media (max-width:400px) {
+            .brand-title-center {
+                font-size: 1.1rem;
+                letter-spacing: 1px;
+            }
+            .brand-lang-wrap select {
+                font-size: 0.7rem;
+                min-width: 50px;
+                padding: 0.15rem 1.4rem 0.15rem 0.4rem;
+            }
+            .brand-logo-area img {
+                height: 42px;
             }
         }
 
