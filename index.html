@@ -8,52 +8,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
     <style>
-        /* ===== 水波纹提示特效 ===== */
-        .question-item {
-            position: relative;
-            border-radius: 16px;
-            padding: 0.6rem 1rem;
-            transition: background 0.3s, color 0.2s;
-            animation: water-ripple 2.8s ease-in-out infinite;
-            z-index: 1;
-        }
-        .question-item:nth-child(1) { animation-delay: 0s; }
-        .question-item:nth-child(2) { animation-delay: 0.9s; }
-        .question-item:nth-child(3) { animation-delay: 1.8s; }
-
-        @keyframes water-ripple {
-            0% {
-                background-color: rgba(127, 159, 122, 0);
-                box-shadow: 0 0 0 0 rgba(127, 159, 122, 0.35), inset 0 0 0 0 rgba(127, 159, 122, 0);
-            }
-            50% {
-                background-color: rgba(127, 159, 122, 0.18);
-                box-shadow: 0 0 0 20px rgba(127, 159, 122, 0), inset 0 0 20px 4px rgba(127, 159, 122, 0.08);
-            }
-            100% {
-                background-color: rgba(127, 159, 122, 0);
-                box-shadow: 0 0 0 0 rgba(127, 159, 122, 0), inset 0 0 0 0 rgba(127, 159, 122, 0);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .question-item {
-                padding: 0.5rem 0.8rem;
-                border-radius: 14px;
-            }
-            @keyframes water-ripple {
-                0% { box-shadow: 0 0 0 0 rgba(127, 159, 122, 0.35); }
-                50% { box-shadow: 0 0 0 14px rgba(127, 159, 122, 0); background-color: rgba(127, 159, 122, 0.2); }
-            }
-        }
-
-        /* ===== 全局重置 ===== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        html, body {
+        html,
+        body {
             height: 100%;
             background-color: #e6ede0;
             background-image: radial-gradient(circle at 20% 30%, #eaf3e5 0%, #d4dcc8 100%);
@@ -65,7 +26,6 @@
             justify-content: center;
             padding: 1rem;
         }
-
         .game-container {
             max-width: 820px;
             width: 100%;
@@ -85,7 +45,6 @@
             transition: background-image 0.5s;
             overflow: hidden;
         }
-
         .mask {
             position: absolute;
             top: 0;
@@ -121,7 +80,6 @@
             pointer-events: none;
             transform: scale(0.98);
         }
-
         .brand-header {
             display: flex;
             justify-content: space-between;
@@ -199,7 +157,6 @@
             color: #2d3d24;
             padding: 4px 8px;
         }
-
         .brand-body {
             flex: 1;
             display: flex;
@@ -255,73 +212,23 @@
             gap: 0.8rem;
             align-self: flex-start;
         }
-        .question-item:hover { color: #5e7a56; }
-        .question-item:active { opacity: 0.7; }
+        .question-item:hover {
+            color: #5e7a56;
+        }
+        .question-item:active {
+            opacity: 0.7;
+        }
         .question-item .q-emoji {
             font-size: 1.6rem;
             line-height: 1;
             flex-shrink: 0;
         }
-        .question-item:nth-child(2) { align-self: flex-end; }
-        .question-item:nth-child(3) { align-self: flex-start; }
-
-        @media (max-width:600px) {
-            .brand-body { padding-top: 0.2rem; }
-            .brand-intro { font-size: 1.0rem; max-height: 150px; padding: 0.5rem 0.8rem; margin-bottom: 0.5rem; }
-            .brand-questions { gap: 2rem; justify-content: center; padding: 0.3rem 0; flex: 1; min-height: 50vh; }
-            .question-item { font-size: 1.1rem; padding: 0.5rem 0.2rem; }
-            .question-item .q-emoji { font-size: 1.4rem; }
-            .question-item:nth-child(2) { align-self: flex-end; }
-            .brand-logo-area img { height: 58px; }
-            .brand-header {
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: nowrap;
-            }
-            .brand-title-center {
-                position: static;
-                transform: none;
-                flex: 1;
-                text-align: center;
-                font-size: 1.6rem;
-                letter-spacing: 4px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                padding: 0 0.3rem;
-            }
-            .brand-lang-wrap {
-                flex-shrink: 0;
-                margin-left: 0.3rem;
-            }
-            .brand-lang-wrap select {
-                font-size: 0.8rem;
-                padding: 0.2rem 1.6rem 0.2rem 0.6rem;
-                min-width: 60px;
-                background-position: right 0.4rem center;
-                padding-right: 1.8rem;
-            }
-            .brand-btn { font-size: 1.2rem; padding: 0.4rem 1.8rem; }
-            .brand-btn .arrow-icon { font-size: 1.2rem; }
+        .question-item:nth-child(2) {
+            align-self: flex-end;
         }
-
-        @media (max-width:400px) {
-            .brand-title-center { font-size: 1.2rem; letter-spacing: 2px; }
-            .brand-lang-wrap select { font-size: 0.7rem; min-width: 50px; padding: 0.15rem 1.4rem 0.15rem 0.4rem; }
-            .brand-logo-area img { height: 42px; }
+        .question-item:nth-child(3) {
+            align-self: flex-start;
         }
-
-        @media (max-width:600px) {
-            #brandPage { box-shadow: none !important; }
-            .brand-logo-area img { height: 80px !important; }
-            .brand-body { padding-top: 1.2rem !important; }
-            .brand-intro { margin-bottom: 0.8rem; }
-        }
-        @media (max-width:400px) {
-            .brand-logo-area img { height: 60px !important; }
-            .brand-body { padding-top: 0.8rem !important; }
-        }
-
         .brand-footer-area {
             flex-shrink: 0;
             width: 100%;
@@ -361,7 +268,9 @@
             transform: translate(-2px, -2px);
             box-shadow: 5px 5px 0 #7f9f7a;
         }
-        .brand-btn:hover .arrow-icon { transform: translateX(6px); }
+        .brand-btn:hover .arrow-icon {
+            transform: translateX(6px);
+        }
         .brand-btn:active {
             transform: translate(2px, 2px);
             box-shadow: 1px 1px 0 #7f9f7a;
@@ -382,7 +291,9 @@
             pointer-events: auto;
             backdrop-filter: blur(2px);
         }
-        #questionPopupOverlay.active { display: flex; }
+        #questionPopupOverlay.active {
+            display: flex;
+        }
         .question-popup-card {
             background: #5c5c5c;
             color: #ffffff;
@@ -421,14 +332,29 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .question-popup-card .close-icon:hover { color: #ffffff; transform: scale(1.2); }
-        .question-popup-card, .question-popup-card h3, .question-popup-card div, .question-popup-card p,
-        .question-popup-card span, .question-popup-card i, .question-popup-card b, .question-popup-card strong {
+        .question-popup-card .close-icon:hover {
+            color: #ffffff;
+            transform: scale(1.2);
+        }
+        .question-popup-card,
+        .question-popup-card h3,
+        .question-popup-card div,
+        .question-popup-card p,
+        .question-popup-card span,
+        .question-popup-card i,
+        .question-popup-card b,
+        .question-popup-card strong {
             color: #ffffff;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-12px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ===== 前置表单 ===== */
@@ -447,7 +373,9 @@
             padding: 1.5rem;
             border-radius: inherit;
         }
-        #preGameForm.active { display: flex; }
+        #preGameForm.active {
+            display: flex;
+        }
         .form-card {
             background: #f5f7ed;
             padding: 2rem 2.2rem;
@@ -468,7 +396,11 @@
             padding-bottom: 0.8rem;
             margin-bottom: 1.5rem;
         }
-        .form-card label { display: block; margin: 0.8rem 0 0.3rem; font-weight: bold; }
+        .form-card label {
+            display: block;
+            margin: 0.8rem 0 0.3rem;
+            font-weight: bold;
+        }
         .form-card select {
             width: 100%;
             padding: 0.6rem;
@@ -493,8 +425,13 @@
             transition: background 0.2s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .form-card .btn-primary:hover { background: #5e7a56; }
-        .form-card .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .form-card .btn-primary:hover {
+            background: #5e7a56;
+        }
+        .form-card .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
         .form-card .privacy-note {
             font-size: 0.8rem;
             color: #6a8f63;
@@ -516,14 +453,20 @@
             flex-shrink: 0;
             cursor: pointer;
         }
-        .consent-area label { font-weight: normal; margin: 0; cursor: pointer; }
+        .consent-area label {
+            font-weight: normal;
+            margin: 0;
+            cursor: pointer;
+        }
         .consent-area .info-link {
             color: #5e7a56;
             text-decoration: underline;
             cursor: pointer;
             font-weight: bold;
         }
-        .consent-area .info-link:hover { color: #3d5a35; }
+        .consent-area .info-link:hover {
+            color: #3d5a35;
+        }
 
         /* ===== 游戏内样式 ===== */
         .top-section {
@@ -650,10 +593,16 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             transition: 0.2s;
         }
-        .continue-btn:hover { color: #3d6b3a; transform: scale(1.15); }
-        .continue-btn:active { transform: scale(0.95); }
-        .continue-btn.hidden { display: none; }
-
+        .continue-btn:hover {
+            color: #3d6b3a;
+            transform: scale(1.15);
+        }
+        .continue-btn:active {
+            transform: scale(0.95);
+        }
+        .continue-btn.hidden {
+            display: none;
+        }
         .popup-overlay {
             position: absolute;
             top: 0;
@@ -668,7 +617,9 @@
             pointer-events: auto;
             border-radius: inherit;
         }
-        .popup-overlay.active { display: flex; }
+        .popup-overlay.active {
+            display: flex;
+        }
         .popup-card {
             background: #f9f2e3;
             border-left: 8px solid #7f9f7a;
@@ -705,8 +656,10 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .popup-card .close-icon:hover { color: #4a6a42; transform: scale(1.2); }
-
+        .popup-card .close-icon:hover {
+            color: #4a6a42;
+            transform: scale(1.2);
+        }
         .footer {
             flex-shrink: 0;
             display: flex;
@@ -728,7 +681,8 @@
             border: 1px solid #a3c6a0;
             font-style: italic;
         }
-        .bgm-control, .reset-btn {
+        .bgm-control,
+        .reset-btn {
             background: transparent;
             border: 1px solid #a3c6a0;
             color: #4d6645;
@@ -747,9 +701,12 @@
             transform: translate(2px, 2px);
             box-shadow: 0 0 0 #a3c6a0;
         }
-        .bgm-control:hover, .reset-btn:hover { background: #c8dbb8; }
-
-        .character-left, .character-right {
+        .bgm-control:hover,
+        .reset-btn:hover {
+            background: #c8dbb8;
+        }
+        .character-left,
+        .character-right {
             position: absolute;
             width: 180px;
             z-index: 1;
@@ -758,9 +715,14 @@
             align-items: stretch;
             pointer-events: none;
         }
-        .character-left { left: 10px; }
-        .character-right { right: 10px; }
-        .character-left img, .character-right img {
+        .character-left {
+            left: 10px;
+        }
+        .character-right {
+            right: 10px;
+        }
+        .character-left img,
+        .character-right img {
             width: 100%;
             height: auto;
             filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15)) brightness(1.05);
@@ -784,9 +746,16 @@
             backdrop-filter: blur(2px);
             pointer-events: none;
         }
-        .character-left .char-name { left: 100%; margin-left: 6px; }
-        .character-right .char-name { right: 100%; margin-right: 6px; }
+        .character-left .char-name {
+            left: 100%;
+            margin-left: 6px;
+        }
+        .character-right .char-name {
+            right: 100%;
+            margin-right: 6px;
+        }
 
+        /* ===== 卷轴 ===== */
         #scrollOverlay {
             position: absolute;
             top: 0;
@@ -803,7 +772,9 @@
             padding: 1.5rem;
             box-sizing: border-box;
         }
-        #scrollOverlay.active { display: flex; }
+        #scrollOverlay.active {
+            display: flex;
+        }
         .scroll-panel {
             background: #f5f7ed;
             padding: 2.5rem 2rem 1.8rem 2rem;
@@ -855,9 +826,15 @@
             transition: 0.2s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .scroll-close-btn:hover { background: #5e7a56; transform: scale(1.02); }
-        .scroll-close-btn:active { transform: scale(0.96); }
+        .scroll-close-btn:hover {
+            background: #5e7a56;
+            transform: scale(1.02);
+        }
+        .scroll-close-btn:active {
+            transform: scale(0.96);
+        }
 
+        /* ===== 尾声 ===== */
         #endingScreen {
             position: absolute;
             top: 0;
@@ -874,7 +851,9 @@
             padding: 2rem;
             box-sizing: border-box;
         }
-        #endingScreen.active { display: flex; }
+        #endingScreen.active {
+            display: flex;
+        }
         .ending-panel {
             background: #f5f7ed;
             padding: 2.8rem 2.8rem 2.2rem 2.8rem;
@@ -936,50 +915,161 @@
             transform: scale(1.03);
             box-shadow: 0 8px 20px rgba(60, 80, 50, 0.4);
         }
-        .ending-panel .ending-restart-btn:active { transform: scale(0.96); }
-
-        .history-screen { display: none !important; }
-        #routeTag { display: none !important; }
+        .ending-panel .ending-restart-btn:active {
+            transform: scale(0.96);
+        }
+        .history-screen {
+            display: none !important;
+        }
+        #routeTag {
+            display: none !important;
+        }
 
         /* ===== 响应式 ===== */
         @media (max-width:600px) {
-            .game-container { padding: 0.8rem 0.8rem 0; height: 98vh; }
-            #brandPage { padding: 1.2rem 1rem 1.8rem 1rem; }
-            .brand-logo-area img { height: 58px; }
-            .brand-title-center { font-size: 1.6rem; letter-spacing: 4px; white-space: nowrap; }
-            .brand-lang-wrap select { font-size: 0.8rem; padding: 0.2rem 1.6rem 0.2rem 0.6rem; min-width: 60px; background-position: right 0.4rem center; padding-right: 1.8rem; }
-            .brand-intro { font-size: 1.0rem; max-height: 150px; padding: 0.5rem 0.8rem; }
-            .question-item { font-size: 1.1rem; padding: 0.5rem 0.2rem; }
-            .question-item .q-emoji { font-size: 1.4rem; }
-            .brand-btn { font-size: 1.2rem; padding: 0.4rem 1.8rem; }
-            .character-left, .character-right { width: 120px; }
-            h1 { font-size: 1.6rem; margin-left: 0.5rem; }
-            .chapter-tag { margin-left: 0.5rem; font-size: 0.85rem; }
-            .option-btn { font-size: 1rem; padding: 0.5rem 1rem; }
-            .story-area { font-size: 0.95rem; max-height: 140px; }
-            .scroll-poem { font-size: 1.6rem; line-height: 2.4; }
-            .form-card { padding: 1.5rem; }
-            .scroll-panel { padding: 1.5rem 1rem; }
-            .ending-panel { padding: 1.8rem 1.5rem 1.5rem 1.5rem; }
-            .ending-panel .ending-body { font-size: 1rem; line-height: 2; }
-            .ending-panel .ending-restart-btn { font-size: 1.2rem; padding: 0.6rem 2.4rem; }
-            .question-popup-card { max-width: 96%; max-height: 60vh; padding: 1rem 1.2rem; font-size: 0.9rem; margin-top: 10px; }
-            .brand-header { justify-content: space-between; align-items: center; flex-wrap: nowrap; }
-            .brand-title-center { position: static; transform: none; flex: 1; text-align: center; font-size: 1.4rem; letter-spacing: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 0.2rem; }
-            .brand-lang-wrap { flex-shrink: 0; margin-left: 0.3rem; }
+            .game-container {
+                padding: 0.8rem 0.8rem 0;
+                height: 98vh;
+            }
+            #brandPage {
+                padding: 1.2rem 1rem 1.8rem 1rem;
+            }
+            .brand-logo-area img {
+                height: 58px;
+            }
+            .brand-title-center {
+                font-size: 1.6rem;
+                letter-spacing: 4px;
+                white-space: nowrap;
+            }
+            .brand-lang-wrap select {
+                font-size: 0.8rem;
+                padding: 0.2rem 1.6rem 0.2rem 0.6rem;
+                min-width: 60px;
+                background-position: right 0.4rem center;
+                padding-right: 1.8rem;
+            }
+            .brand-intro {
+                font-size: 1.0rem;
+                max-height: 150px;
+                padding: 0.5rem 0.8rem;
+            }
+            .question-item {
+                font-size: 1.1rem;
+                padding: 0.5rem 0.2rem;
+            }
+            .question-item .q-emoji {
+                font-size: 1.4rem;
+            }
+            .brand-btn {
+                font-size: 1.2rem;
+                padding: 0.4rem 1.8rem;
+            }
+            .character-left,
+            .character-right {
+                width: 120px;
+            }
+            h1 {
+                font-size: 1.6rem;
+                margin-left: 0.5rem;
+            }
+            .chapter-tag {
+                margin-left: 0.5rem;
+                font-size: 0.85rem;
+            }
+            .option-btn {
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+            }
+            .story-area {
+                font-size: 0.95rem;
+                max-height: 140px;
+            }
+            .scroll-poem {
+                font-size: 1.6rem;
+                line-height: 2.4;
+            }
+            .form-card {
+                padding: 1.5rem;
+            }
+            .scroll-panel {
+                padding: 1.5rem 1rem;
+            }
+            .ending-panel {
+                padding: 1.8rem 1.5rem 1.5rem 1.5rem;
+            }
+            .ending-panel .ending-body {
+                font-size: 1rem;
+                line-height: 2;
+            }
+            .ending-panel .ending-restart-btn {
+                font-size: 1.2rem;
+                padding: 0.6rem 2.4rem;
+            }
+            .question-popup-card {
+                max-width: 96%;
+                max-height: 60vh;
+                padding: 1rem 1.2rem;
+                font-size: 0.9rem;
+                margin-top: 10px;
+            }
+            .brand-header {
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: nowrap;
+            }
+            .brand-title-center {
+                position: static;
+                transform: none;
+                flex: 1;
+                text-align: center;
+                font-size: 1.4rem;
+                letter-spacing: 2px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 0.2rem;
+            }
+            .brand-lang-wrap {
+                flex-shrink: 0;
+                margin-left: 0.3rem;
+            }
         }
         @media (max-width:400px) {
-            .brand-title-center { font-size: 1.1rem; letter-spacing: 1px; }
-            .brand-lang-wrap select { font-size: 0.7rem; min-width: 50px; padding: 0.15rem 1.4rem 0.15rem 0.4rem; }
-            .brand-logo-area img { height: 42px; }
+            .brand-title-center {
+                font-size: 1.1rem;
+                letter-spacing: 1px;
+            }
+            .brand-lang-wrap select {
+                font-size: 0.7rem;
+                min-width: 50px;
+                padding: 0.15rem 1.4rem 0.15rem 0.4rem;
+            }
+            .brand-logo-area img {
+                height: 42px;
+            }
         }
         @media (min-width:601px) and (max-width:1000px) {
-            .character-left, .character-right { width: 140px; }
-            .story-area { font-size: 1rem; }
-            .scroll-poem { font-size: 2rem; }
-            .ending-panel .ending-body { font-size: 1.1rem; }
-            .brand-title-center { font-size: 2.6rem; letter-spacing: 8px; }
-            .brand-logo-area img { height: 80px; }
+            .character-left,
+            .character-right {
+                width: 140px;
+            }
+            .story-area {
+                font-size: 1rem;
+            }
+            .scroll-poem {
+                font-size: 2rem;
+            }
+            .ending-panel .ending-body {
+                font-size: 1.1rem;
+            }
+            .brand-title-center {
+                font-size: 2.6rem;
+                letter-spacing: 8px;
+            }
+            .brand-logo-area img {
+                height: 80px;
+            }
         }
     </style>
 </head>
@@ -987,7 +1077,7 @@
     <div class="game-container" id="gameContainer">
         <div class="mask"></div>
 
-        <!-- ========== 品牌页 ========== -->
+        <!-- ===== 品牌页 ===== -->
         <div id="brandPage">
             <div class="brand-header">
                 <div class="brand-logo-area">
@@ -1002,7 +1092,6 @@
                     </select>
                 </div>
             </div>
-
             <div class="brand-body">
                 <div class="brand-intro" id="brandIntro"></div>
                 <div class="brand-questions">
@@ -1020,7 +1109,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="brand-footer-area">
                 <button class="brand-btn" id="brandEnterBtn">
                     <span>进入体验</span>
@@ -1029,7 +1117,7 @@
             </div>
         </div>
 
-        <!-- ========== 问题详情浮窗（独立） ========== -->
+        <!-- ===== 问题详情浮窗 ===== -->
         <div id="questionPopupOverlay">
             <div class="question-popup-card">
                 <span class="close-icon" id="closeQuestionPopup">✕</span>
@@ -1038,7 +1126,7 @@
             </div>
         </div>
 
-        <!-- ========== 前置表单 ========== -->
+        <!-- ===== 前置表单 ===== -->
         <div id="preGameForm">
             <div class="form-card">
                 <h2 id="formTitle">📜 游历之前，请留下印记</h2>
@@ -1114,7 +1202,6 @@
             <span class="bgm-control" id="bgmToggle">🔊 江风</span>
             <button class="reset-btn" id="resetBtn">重头再来</button>
         </div>
-
         <div class="history-screen" id="historyScreen" style="display:none;"></div>
     </div>
 
@@ -1145,8 +1232,7 @@
         let currentAudio = null;
         let autoPlayEnabled = false;
         let scrollTimer = null;
-        let autoPlayTimer = null;
-        let sceneAudioPending = false;   // 👈 新增：标记场景配音是否需要等待弹窗结束后播放
+        let sceneAudioPending = false;
 
         let playerChoices = {
             node0_culture_pre: '',
@@ -2043,14 +2129,12 @@
             popupOverlay.classList.add('active');
             hideInteractions();
 
-            // 关闭按钮
             document.getElementById('closePopup').addEventListener('click', function(e) {
                 e.stopPropagation();
                 cancelAllSpeech();
                 closePopupAndContinue();
             });
 
-            // 点击遮罩关闭
             popupOverlay.addEventListener('click', function(e) {
                 if (e.target === popupOverlay) {
                     cancelAllSpeech();
@@ -2058,7 +2142,6 @@
                 }
             });
 
-            // 播放弹窗对应的音频
             playAudio(id, closePopupAndContinue);
         }
 
@@ -2069,17 +2152,22 @@
             const scene = scenes[currentSceneId];
             if (scene) restoreInteractions(scene);
 
-            // 👇 检查是否有待播放的场景配音
             if (popupQueue.length > 0) {
                 const next = popupQueue.shift();
                 showPopup(next.type, next.id);
             } else {
-                // 所有弹窗已关闭，如果有场景配音待播放则播放
                 if (sceneAudioPending && currentSceneId && scene && scene.type !== 'scroll' && scene.type !== 'ending') {
                     sceneAudioPending = false;
-                    playAudio(currentSceneId);
+                    playAudio(currentSceneId, function() {
+                        if (autoPlayEnabled && scene.options && scene.options.length === 1) {
+                            setTimeout(() => {
+                                if (!continueBtn.classList.contains('hidden')) {
+                                    continueBtn.click();
+                                }
+                            }, 500);
+                        }
+                    });
                 }
-                if (autoPlayEnabled) scheduleAutoPlay();
             }
             adjustCharacterPosition();
         }
@@ -2091,21 +2179,30 @@
             }
         }
 
-        // ===== 卷轴 =====
+        // ===== 卷轴（关键修改：添加配音） =====
         function showScroll(scene) {
+            // 停止之前的卷轴动画
             if (scrollTimer) { clearInterval(scrollTimer);
                 scrollTimer = null; }
             completeTyping();
             clearAutoPlayTimer();
             optionsDiv.style.display = 'none';
             continueBtn.classList.add('hidden');
+
+            // 👇 播放卷轴配音（音频文件：jinshan.m4a）
+            playAudio('jinshan', function() {
+                console.log('卷轴配音播放完毕');
+            });
+
             scrollTitle.textContent = t(scene.chapter) || '自题金山画像';
             scrollCloseBtn.textContent = t(uiTexts.scrollContinue);
             scrollPoem.textContent = '';
+
             const poemText = t(scene.scrollContent);
             const chars = poemText.split('');
             let index = 0;
             const isMobile = window.innerWidth < 600;
+
             if (currentLang === 'zh') {
                 scrollPoem.style.writingMode = 'vertical-rl';
                 scrollPoem.style.fontSize = isMobile ? '1.5rem' : '2.2rem';
@@ -2126,7 +2223,9 @@
                 scrollPoem.style.wordBreak = 'break-word';
                 scrollPoem.style.width = '100%';
             }
+
             scrollOverlay.classList.add('active');
+
             const speed = 80;
             scrollTimer = setInterval(() => {
                 if (index < chars.length) {
@@ -2137,7 +2236,9 @@
                     scrollTimer = null;
                 }
             }, speed);
+
             scrollCloseBtn.onclick = function() {
+                cancelAllSpeech();
                 if (scrollTimer) { clearInterval(scrollTimer);
                     scrollTimer = null; }
                 scrollOverlay.classList.remove('active');
@@ -2233,45 +2334,16 @@
         }
 
         // ===== 自动播放调度 =====
-        function clearAutoPlayTimer() {
-            if (autoPlayTimer) {
-                clearTimeout(autoPlayTimer);
-                autoPlayTimer = null;
-            }
+        function scheduleAutoPlay() {
+            // 自动播放已由配音结束回调驱动，此函数保留占位
         }
 
-        function scheduleAutoPlay() {
-            clearAutoPlayTimer();
-            const scene = scenes[currentSceneId];
-            if (!scene || scene.type === 'ending' || scene.type === 'scroll') return;
-            const hasContinue = !continueBtn.classList.contains('hidden');
-            const hasOptions = optionsDiv.children.length > 0;
-            if (!hasContinue && !hasOptions) return;
-
-            autoPlayTimer = setTimeout(() => {
-                autoPlayTimer = null;
-                if (!autoPlayEnabled) return;
-                if (!continueBtn.classList.contains('hidden')) {
-                    continueBtn.click();
-                    return;
-                }
-                const firstOption = optionsDiv.querySelector('.option-btn');
-                if (firstOption) {
-                    firstOption.click();
-                    return;
-                }
-                const inputField = optionsDiv.querySelector('input[type="text"]');
-                if (inputField) {
-                    inputField.value = t({ zh: '人生如茶', en: 'Life is like tea', fr: 'La vie est comme le thé' });
-                    const submitBtn = optionsDiv.querySelector('.option-btn:last-child');
-                    if (submitBtn) submitBtn.click();
-                }
-            }, 3000);
+        function clearAutoPlayTimer() {
+            // 不再需要定时器
         }
 
         // ===== 核心显示函数 =====
         function displayScene(sceneId) {
-            // 重置场景配音待播放标志
             sceneAudioPending = false;
 
             if (currentSceneId && currentSceneId !== sceneId) {
@@ -2341,16 +2413,20 @@
                 paraElements.push(p);
             });
 
-            // 打字机效果 + 配音播放
             typeWriter(paraElements, plainTexts, 30, () => {
-                // 如果场景有弹窗，暂时不播放场景配音，等待弹窗处理
                 if (scene.popup) {
-                    // 有弹窗 → 标记待播放，等弹窗队列清空后再播放
                     sceneAudioPending = true;
                 } else {
-                    // 没有弹窗 → 立即播放场景配音
                     if (scene.type !== 'scroll' && scene.type !== 'ending') {
-                        playAudio(sceneId);
+                        playAudio(sceneId, function() {
+                            if (autoPlayEnabled && scene.options && scene.options.length === 1) {
+                                setTimeout(() => {
+                                    if (!continueBtn.classList.contains('hidden')) {
+                                        continueBtn.click();
+                                    }
+                                }, 500);
+                            }
+                        });
                     }
                     sceneAudioPending = false;
                 }
@@ -2359,7 +2435,6 @@
             optionsDiv.innerHTML = '';
             continueBtn.classList.add('hidden');
 
-            // 特殊处理卷轴场景
             if (scene.type === 'scroll') {
                 storyDiv.innerHTML = '';
                 showScroll(scene);
@@ -2368,7 +2443,6 @@
                 return;
             }
 
-            // 处理 checkbox 类型
             if (scene.type === 'checkbox') {
                 optionsDiv.style.display = 'flex';
                 const container = document.createElement('div');
@@ -2413,7 +2487,6 @@
                 });
                 container.appendChild(submitBtn);
                 optionsDiv.appendChild(container);
-                setTimeout(() => { if (autoPlayEnabled) scheduleAutoPlay(); }, 100);
             } else if (scene.type === 'single-choice') {
                 optionsDiv.style.display = 'flex';
                 scene.options.forEach(opt => {
@@ -2438,7 +2511,6 @@
                     });
                     optionsDiv.appendChild(btn);
                 });
-                setTimeout(() => { if (autoPlayEnabled) scheduleAutoPlay(); }, 100);
             } else if (scene.type === 'text') {
                 optionsDiv.style.display = 'flex';
                 const container = document.createElement('div');
@@ -2477,9 +2549,7 @@
                 container.appendChild(input);
                 container.appendChild(submitBtn);
                 optionsDiv.appendChild(container);
-                setTimeout(() => { if (autoPlayEnabled) scheduleAutoPlay(); }, 100);
             } else {
-                // 普通场景（只有继续按钮或多个选项）
                 if (scene.options && scene.options.length === 1) {
                     optionsDiv.style.display = 'none';
                     continueBtn.classList.remove('hidden');
@@ -2488,7 +2558,6 @@
                         if (isTyping) { completeTyping(); return; }
                         displayScene(scene.options[0].nextScene);
                     };
-                    setTimeout(() => { if (autoPlayEnabled) scheduleAutoPlay(); }, 100);
                 } else if (scene.options && scene.options.length > 1) {
                     optionsDiv.style.display = 'flex';
                     scene.options.forEach(opt => {
@@ -2507,13 +2576,11 @@
                         });
                         optionsDiv.appendChild(btn);
                     });
-                    setTimeout(() => { if (autoPlayEnabled) scheduleAutoPlay(); }, 100);
                 } else {
                     optionsDiv.style.display = 'none';
                 }
             }
 
-            // 处理弹出框（知识卡片/人物卡片）
             if (scene.popup) {
                 let items = [];
                 if (Array.isArray(scene.popup)) items = scene.popup;
@@ -2524,11 +2591,8 @@
                 });
                 clearAutoPlayTimer();
                 processPopupQueue();
-            } else {
-                if (autoPlayEnabled) {
-                    setTimeout(scheduleAutoPlay, 200);
-                }
             }
+
             updateCharacters(scene.leftChar, scene.rightChar);
             setTimeout(adjustCharacterPosition, 50);
         }
@@ -2554,7 +2618,6 @@
 
         // ===== 重置游戏 =====
         function resetGame() {
-            clearAutoPlayTimer();
             cancelAllSpeech();
             if (scrollTimer) { clearInterval(scrollTimer);
                 scrollTimer = null; }
@@ -2626,11 +2689,6 @@
         autoPlayBtn.addEventListener('click', () => {
             autoPlayEnabled = !autoPlayEnabled;
             autoPlayBtn.textContent = autoPlayEnabled ? t(uiTexts.autoPlaying) : t(uiTexts.autoPlay);
-            if (autoPlayEnabled) {
-                scheduleAutoPlay();
-            } else {
-                clearAutoPlayTimer();
-            }
         });
 
         resetBtn.addEventListener('click', resetGame);
