@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
     <style>
-        /* ===== 更明显的水波纹提示特效 ===== */
+        /* ===== 水波纹提示特效 ===== */
         .question-item {
             position: relative;
             border-radius: 16px;
@@ -17,8 +17,6 @@
             animation: water-ripple 2.8s ease-in-out infinite;
             z-index: 1;
         }
-
-        /* 错开延迟，形成波浪 */
         .question-item:nth-child(1) { animation-delay: 0s; }
         .question-item:nth-child(2) { animation-delay: 0.9s; }
         .question-item:nth-child(3) { animation-delay: 1.8s; }
@@ -26,38 +24,26 @@
         @keyframes water-ripple {
             0% {
                 background-color: rgba(127, 159, 122, 0);
-                box-shadow: 
-                    0 0 0 0 rgba(127, 159, 122, 0.35),
-                    inset 0 0 0 0 rgba(127, 159, 122, 0);
+                box-shadow: 0 0 0 0 rgba(127, 159, 122, 0.35), inset 0 0 0 0 rgba(127, 159, 122, 0);
             }
             50% {
                 background-color: rgba(127, 159, 122, 0.18);
-                box-shadow: 
-                    0 0 0 20px rgba(127, 159, 122, 0),
-                    inset 0 0 20px 4px rgba(127, 159, 122, 0.08);
+                box-shadow: 0 0 0 20px rgba(127, 159, 122, 0), inset 0 0 20px 4px rgba(127, 159, 122, 0.08);
             }
             100% {
                 background-color: rgba(127, 159, 122, 0);
-                box-shadow: 
-                    0 0 0 0 rgba(127, 159, 122, 0),
-                    inset 0 0 0 0 rgba(127, 159, 122, 0);
+                box-shadow: 0 0 0 0 rgba(127, 159, 122, 0), inset 0 0 0 0 rgba(127, 159, 122, 0);
             }
         }
 
-        /* 手机端微调 */
         @media (max-width: 600px) {
             .question-item {
                 padding: 0.5rem 0.8rem;
                 border-radius: 14px;
             }
             @keyframes water-ripple {
-                0% {
-                    box-shadow: 0 0 0 0 rgba(127, 159, 122, 0.35);
-                }
-                50% {
-                    box-shadow: 0 0 0 14px rgba(127, 159, 122, 0);
-                    background-color: rgba(127, 159, 122, 0.2);
-                }
+                0% { box-shadow: 0 0 0 0 rgba(127, 159, 122, 0.35); }
+                50% { box-shadow: 0 0 0 14px rgba(127, 159, 122, 0); background-color: rgba(127, 159, 122, 0.2); }
             }
         }
 
@@ -67,8 +53,7 @@
             margin: 0;
             padding: 0;
         }
-        html,
-        body {
+        html, body {
             height: 100%;
             background-color: #e6ede0;
             background-image: radial-gradient(circle at 20% 30%, #eaf3e5 0%, #d4dcc8 100%);
@@ -113,7 +98,7 @@
             border-radius: inherit;
         }
 
-        /* ===== 品牌页（初始页面） ===== */
+        /* ===== 品牌页 ===== */
         #brandPage {
             position: absolute;
             top: 0;
@@ -215,7 +200,6 @@
             padding: 4px 8px;
         }
 
-        /* ===== 品牌页 body ===== */
         .brand-body {
             flex: 1;
             display: flex;
@@ -227,7 +211,6 @@
             width: 100%;
             max-height: calc(100% - 120px);
         }
-
         .brand-intro {
             font-size: 1.1rem;
             line-height: 1.8;
@@ -246,7 +229,6 @@
             font-family: "LXGW WenKai", "霞鹜文楷", serif;
             flex-shrink: 0;
         }
-
         .brand-questions {
             flex: 1;
             display: flex;
@@ -258,7 +240,6 @@
             margin: 0 auto;
             padding: 0.5rem 0;
         }
-
         .question-item {
             background: transparent;
             border: none;
@@ -274,59 +255,24 @@
             gap: 0.8rem;
             align-self: flex-start;
         }
-        .question-item:hover {
-            color: #5e7a56;
-        }
-        .question-item:active {
-            opacity: 0.7;
-        }
-        .question-item .q-icon {
-            display: none;
-        }
+        .question-item:hover { color: #5e7a56; }
+        .question-item:active { opacity: 0.7; }
         .question-item .q-emoji {
             font-size: 1.6rem;
             line-height: 1;
             flex-shrink: 0;
         }
-        .question-item:nth-child(2) {
-            align-self: flex-end;
-        }
-        .question-item:nth-child(3) {
-            align-self: flex-start;
-        }
+        .question-item:nth-child(2) { align-self: flex-end; }
+        .question-item:nth-child(3) { align-self: flex-start; }
 
         @media (max-width:600px) {
-            .brand-body {
-                padding-top: 0.2rem;
-            }
-            .brand-intro {
-                font-size: 1.0rem;
-                max-height: 150px;
-                padding: 0.5rem 0.8rem;
-                margin-bottom: 0.5rem;
-            }
-            .brand-questions {
-                gap: 2rem;
-                justify-content: center;
-                padding: 0.3rem 0;
-                flex: 1;
-                min-height: 50vh;
-            }
-            .question-item {
-                font-size: 1.1rem;
-                padding: 0.5rem 0.2rem;
-            }
-            .question-item .q-emoji {
-                font-size: 1.4rem;
-            }
-            .question-item:nth-child(2) {
-                align-self: flex-end;
-            }
-            .brand-logo-area img {
-                height: 58px;
-            }
-
-            /* ===== 修复标题与语言按钮重叠 ===== */
+            .brand-body { padding-top: 0.2rem; }
+            .brand-intro { font-size: 1.0rem; max-height: 150px; padding: 0.5rem 0.8rem; margin-bottom: 0.5rem; }
+            .brand-questions { gap: 2rem; justify-content: center; padding: 0.3rem 0; flex: 1; min-height: 50vh; }
+            .question-item { font-size: 1.1rem; padding: 0.5rem 0.2rem; }
+            .question-item .q-emoji { font-size: 1.4rem; }
+            .question-item:nth-child(2) { align-self: flex-end; }
+            .brand-logo-area img { height: 58px; }
             .brand-header {
                 justify-content: space-between;
                 align-items: center;
@@ -355,60 +301,25 @@
                 background-position: right 0.4rem center;
                 padding-right: 1.8rem;
             }
-            .brand-btn {
-                font-size: 1.2rem;
-                padding: 0.4rem 1.8rem;
-            }
-            .brand-btn .arrow-icon {
-                font-size: 1.2rem;
-            }
+            .brand-btn { font-size: 1.2rem; padding: 0.4rem 1.8rem; }
+            .brand-btn .arrow-icon { font-size: 1.2rem; }
         }
 
         @media (max-width:400px) {
-            .brand-title-center {
-                font-size: 1.2rem;
-                letter-spacing: 2px;
-            }
-            .brand-lang-wrap select {
-                font-size: 0.7rem;
-                min-width: 50px;
-                padding: 0.15rem 1.4rem 0.15rem 0.4rem;
-            }
-            .brand-logo-area img {
-                height: 42px;
-            }
+            .brand-title-center { font-size: 1.2rem; letter-spacing: 2px; }
+            .brand-lang-wrap select { font-size: 0.7rem; min-width: 50px; padding: 0.15rem 1.4rem 0.15rem 0.4rem; }
+            .brand-logo-area img { height: 42px; }
         }
 
-        /* ================================================================
-                   【手机端优化】去掉一层阴影 · Logo放大 · 简介下移
-                   ================================================================ */
         @media (max-width:600px) {
-            /* 去掉品牌页自身的 inset 阴影，只保留 .game-container 的一层阴影 */
-            #brandPage {
-                box-shadow: none !important;
-            }
-            /* Logo 放大：从 58px → 80px */
-            .brand-logo-area img {
-                height: 80px !important;
-            }
-            /* 简介下移：增加 .brand-body 的上内边距 */
-            .brand-body {
-                padding-top: 1.2rem !important;
-            }
-            /* 微调简介底部间距，保持视觉平衡 */
-            .brand-intro {
-                margin-bottom: 0.8rem;
-            }
+            #brandPage { box-shadow: none !important; }
+            .brand-logo-area img { height: 80px !important; }
+            .brand-body { padding-top: 1.2rem !important; }
+            .brand-intro { margin-bottom: 0.8rem; }
         }
-
         @media (max-width:400px) {
-            /* 超小屏 Logo 再放大：从 42px → 60px */
-            .brand-logo-area img {
-                height: 60px !important;
-            }
-            .brand-body {
-                padding-top: 0.8rem !important;
-            }
+            .brand-logo-area img { height: 60px !important; }
+            .brand-body { padding-top: 0.8rem !important; }
         }
 
         .brand-footer-area {
@@ -420,7 +331,6 @@
             padding-top: 0.2rem;
             z-index: 2;
         }
-
         .brand-btn {
             background: transparent;
             border: 2px solid #7f9f7a;
@@ -451,15 +361,13 @@
             transform: translate(-2px, -2px);
             box-shadow: 5px 5px 0 #7f9f7a;
         }
-        .brand-btn:hover .arrow-icon {
-            transform: translateX(6px);
-        }
+        .brand-btn:hover .arrow-icon { transform: translateX(6px); }
         .brand-btn:active {
             transform: translate(2px, 2px);
             box-shadow: 1px 1px 0 #7f9f7a;
         }
 
-        /* ===== 问题详情浮窗 — 灰底（浅一点）白字 ===== */
+        /* ===== 问题详情浮窗 ===== */
         #questionPopupOverlay {
             position: fixed;
             top: 0;
@@ -474,10 +382,7 @@
             pointer-events: auto;
             backdrop-filter: blur(2px);
         }
-        #questionPopupOverlay.active {
-            display: flex;
-        }
-
+        #questionPopupOverlay.active { display: flex; }
         .question-popup-card {
             background: #5c5c5c;
             color: #ffffff;
@@ -516,29 +421,14 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .question-popup-card .close-icon:hover {
-            color: #ffffff;
-            transform: scale(1.2);
-        }
-        .question-popup-card,
-        .question-popup-card h3,
-        .question-popup-card div,
-        .question-popup-card p,
-        .question-popup-card span,
-        .question-popup-card i,
-        .question-popup-card b,
-        .question-popup-card strong {
+        .question-popup-card .close-icon:hover { color: #ffffff; transform: scale(1.2); }
+        .question-popup-card, .question-popup-card h3, .question-popup-card div, .question-popup-card p,
+        .question-popup-card span, .question-popup-card i, .question-popup-card b, .question-popup-card strong {
             color: #ffffff;
         }
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ===== 前置表单 ===== */
@@ -557,9 +447,7 @@
             padding: 1.5rem;
             border-radius: inherit;
         }
-        #preGameForm.active {
-            display: flex;
-        }
+        #preGameForm.active { display: flex; }
         .form-card {
             background: #f5f7ed;
             padding: 2rem 2.2rem;
@@ -580,11 +468,7 @@
             padding-bottom: 0.8rem;
             margin-bottom: 1.5rem;
         }
-        .form-card label {
-            display: block;
-            margin: 0.8rem 0 0.3rem;
-            font-weight: bold;
-        }
+        .form-card label { display: block; margin: 0.8rem 0 0.3rem; font-weight: bold; }
         .form-card select {
             width: 100%;
             padding: 0.6rem;
@@ -609,13 +493,8 @@
             transition: background 0.2s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .form-card .btn-primary:hover {
-            background: #5e7a56;
-        }
-        .form-card .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .form-card .btn-primary:hover { background: #5e7a56; }
+        .form-card .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
         .form-card .privacy-note {
             font-size: 0.8rem;
             color: #6a8f63;
@@ -637,20 +516,14 @@
             flex-shrink: 0;
             cursor: pointer;
         }
-        .consent-area label {
-            font-weight: normal;
-            margin: 0;
-            cursor: pointer;
-        }
+        .consent-area label { font-weight: normal; margin: 0; cursor: pointer; }
         .consent-area .info-link {
             color: #5e7a56;
             text-decoration: underline;
             cursor: pointer;
             font-weight: bold;
         }
-        .consent-area .info-link:hover {
-            color: #3d5a35;
-        }
+        .consent-area .info-link:hover { color: #3d5a35; }
 
         /* ===== 游戏内样式 ===== */
         .top-section {
@@ -682,7 +555,6 @@
             font-style: italic;
             letter-spacing: 3px;
         }
-
         .mid-section {
             flex: 1 1 auto;
             overflow-y: auto;
@@ -722,7 +594,6 @@
             transform: translate(2px, 2px);
             box-shadow: 1px 1px 0 #a3c6a0;
         }
-
         .bottom-dialog {
             flex-shrink: 0;
             position: relative;
@@ -779,16 +650,9 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             transition: 0.2s;
         }
-        .continue-btn:hover {
-            color: #3d6b3a;
-            transform: scale(1.15);
-        }
-        .continue-btn:active {
-            transform: scale(0.95);
-        }
-        .continue-btn.hidden {
-            display: none;
-        }
+        .continue-btn:hover { color: #3d6b3a; transform: scale(1.15); }
+        .continue-btn:active { transform: scale(0.95); }
+        .continue-btn.hidden { display: none; }
 
         .popup-overlay {
             position: absolute;
@@ -804,9 +668,7 @@
             pointer-events: auto;
             border-radius: inherit;
         }
-        .popup-overlay.active {
-            display: flex;
-        }
+        .popup-overlay.active { display: flex; }
         .popup-card {
             background: #f9f2e3;
             border-left: 8px solid #7f9f7a;
@@ -843,10 +705,7 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .popup-card .close-icon:hover {
-            color: #4a6a42;
-            transform: scale(1.2);
-        }
+        .popup-card .close-icon:hover { color: #4a6a42; transform: scale(1.2); }
 
         .footer {
             flex-shrink: 0;
@@ -869,8 +728,7 @@
             border: 1px solid #a3c6a0;
             font-style: italic;
         }
-        .bgm-control,
-        .reset-btn {
+        .bgm-control, .reset-btn {
             background: transparent;
             border: 1px solid #a3c6a0;
             color: #4d6645;
@@ -889,13 +747,9 @@
             transform: translate(2px, 2px);
             box-shadow: 0 0 0 #a3c6a0;
         }
-        .bgm-control:hover,
-        .reset-btn:hover {
-            background: #c8dbb8;
-        }
+        .bgm-control:hover, .reset-btn:hover { background: #c8dbb8; }
 
-        .character-left,
-        .character-right {
+        .character-left, .character-right {
             position: absolute;
             width: 180px;
             z-index: 1;
@@ -904,14 +758,9 @@
             align-items: stretch;
             pointer-events: none;
         }
-        .character-left {
-            left: 10px;
-        }
-        .character-right {
-            right: 10px;
-        }
-        .character-left img,
-        .character-right img {
+        .character-left { left: 10px; }
+        .character-right { right: 10px; }
+        .character-left img, .character-right img {
             width: 100%;
             height: auto;
             filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15)) brightness(1.05);
@@ -935,14 +784,8 @@
             backdrop-filter: blur(2px);
             pointer-events: none;
         }
-        .character-left .char-name {
-            left: 100%;
-            margin-left: 6px;
-        }
-        .character-right .char-name {
-            right: 100%;
-            margin-right: 6px;
-        }
+        .character-left .char-name { left: 100%; margin-left: 6px; }
+        .character-right .char-name { right: 100%; margin-right: 6px; }
 
         #scrollOverlay {
             position: absolute;
@@ -960,9 +803,7 @@
             padding: 1.5rem;
             box-sizing: border-box;
         }
-        #scrollOverlay.active {
-            display: flex;
-        }
+        #scrollOverlay.active { display: flex; }
         .scroll-panel {
             background: #f5f7ed;
             padding: 2.5rem 2rem 1.8rem 2rem;
@@ -1014,13 +855,8 @@
             transition: 0.2s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .scroll-close-btn:hover {
-            background: #5e7a56;
-            transform: scale(1.02);
-        }
-        .scroll-close-btn:active {
-            transform: scale(0.96);
-        }
+        .scroll-close-btn:hover { background: #5e7a56; transform: scale(1.02); }
+        .scroll-close-btn:active { transform: scale(0.96); }
 
         #endingScreen {
             position: absolute;
@@ -1038,9 +874,7 @@
             padding: 2rem;
             box-sizing: border-box;
         }
-        #endingScreen.active {
-            display: flex;
-        }
+        #endingScreen.active { display: flex; }
         .ending-panel {
             background: #f5f7ed;
             padding: 2.8rem 2.8rem 2.2rem 2.8rem;
@@ -1102,165 +936,50 @@
             transform: scale(1.03);
             box-shadow: 0 8px 20px rgba(60, 80, 50, 0.4);
         }
-        .ending-panel .ending-restart-btn:active {
-            transform: scale(0.96);
-        }
+        .ending-panel .ending-restart-btn:active { transform: scale(0.96); }
 
-        .history-screen {
-            display: none !important;
-        }
-        #routeTag {
-            display: none !important;
-        }
+        .history-screen { display: none !important; }
+        #routeTag { display: none !important; }
 
         /* ===== 响应式 ===== */
         @media (max-width:600px) {
-            .game-container {
-                padding: 0.8rem 0.8rem 0;
-                height: 98vh;
-            }
-            #brandPage {
-                padding: 1.2rem 1rem 1.8rem 1rem;
-            }
-            .brand-logo-area img {
-                height: 58px;
-            }
-            .brand-title-center {
-                font-size: 1.6rem;
-                letter-spacing: 4px;
-                white-space: nowrap;
-            }
-            .brand-lang-wrap select {
-                font-size: 0.8rem;
-                padding: 0.2rem 1.6rem 0.2rem 0.6rem;
-                min-width: 60px;
-                background-position: right 0.4rem center;
-                padding-right: 1.8rem;
-            }
-            .brand-intro {
-                font-size: 1.0rem;
-                max-height: 150px;
-                padding: 0.5rem 0.8rem;
-            }
-            .question-item {
-                font-size: 1.1rem;
-                padding: 0.5rem 0.2rem;
-            }
-            .question-item .q-emoji {
-                font-size: 1.4rem;
-            }
-            .brand-btn {
-                font-size: 1.2rem;
-                padding: 0.4rem 1.8rem;
-            }
-            .character-left,
-            .character-right {
-                width: 120px;
-            }
-            h1 {
-                font-size: 1.6rem;
-                margin-left: 0.5rem;
-            }
-            .chapter-tag {
-                margin-left: 0.5rem;
-                font-size: 0.85rem;
-            }
-            .option-btn {
-                font-size: 1rem;
-                padding: 0.5rem 1rem;
-            }
-            .story-area {
-                font-size: 0.95rem;
-                max-height: 140px;
-            }
-            .scroll-poem {
-                font-size: 1.6rem;
-                line-height: 2.4;
-            }
-            .form-card {
-                padding: 1.5rem;
-            }
-            .scroll-panel {
-                padding: 1.5rem 1rem;
-            }
-            .ending-panel {
-                padding: 1.8rem 1.5rem 1.5rem 1.5rem;
-            }
-            .ending-panel .ending-body {
-                font-size: 1rem;
-                line-height: 2;
-            }
-            .ending-panel .ending-restart-btn {
-                font-size: 1.2rem;
-                padding: 0.6rem 2.4rem;
-            }
-            .question-popup-card {
-                max-width: 96%;
-                max-height: 60vh;
-                padding: 1rem 1.2rem;
-                font-size: 0.9rem;
-                margin-top: 10px;
-            }
-            /* 修复标题与语言按钮重叠（已在上面媒体查询中覆盖） */
-            .brand-header {
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: nowrap;
-            }
-            .brand-title-center {
-                position: static;
-                transform: none;
-                flex: 1;
-                text-align: center;
-                font-size: 1.4rem;
-                letter-spacing: 2px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                padding: 0 0.2rem;
-            }
-            .brand-lang-wrap {
-                flex-shrink: 0;
-                margin-left: 0.3rem;
-            }
+            .game-container { padding: 0.8rem 0.8rem 0; height: 98vh; }
+            #brandPage { padding: 1.2rem 1rem 1.8rem 1rem; }
+            .brand-logo-area img { height: 58px; }
+            .brand-title-center { font-size: 1.6rem; letter-spacing: 4px; white-space: nowrap; }
+            .brand-lang-wrap select { font-size: 0.8rem; padding: 0.2rem 1.6rem 0.2rem 0.6rem; min-width: 60px; background-position: right 0.4rem center; padding-right: 1.8rem; }
+            .brand-intro { font-size: 1.0rem; max-height: 150px; padding: 0.5rem 0.8rem; }
+            .question-item { font-size: 1.1rem; padding: 0.5rem 0.2rem; }
+            .question-item .q-emoji { font-size: 1.4rem; }
+            .brand-btn { font-size: 1.2rem; padding: 0.4rem 1.8rem; }
+            .character-left, .character-right { width: 120px; }
+            h1 { font-size: 1.6rem; margin-left: 0.5rem; }
+            .chapter-tag { margin-left: 0.5rem; font-size: 0.85rem; }
+            .option-btn { font-size: 1rem; padding: 0.5rem 1rem; }
+            .story-area { font-size: 0.95rem; max-height: 140px; }
+            .scroll-poem { font-size: 1.6rem; line-height: 2.4; }
+            .form-card { padding: 1.5rem; }
+            .scroll-panel { padding: 1.5rem 1rem; }
+            .ending-panel { padding: 1.8rem 1.5rem 1.5rem 1.5rem; }
+            .ending-panel .ending-body { font-size: 1rem; line-height: 2; }
+            .ending-panel .ending-restart-btn { font-size: 1.2rem; padding: 0.6rem 2.4rem; }
+            .question-popup-card { max-width: 96%; max-height: 60vh; padding: 1rem 1.2rem; font-size: 0.9rem; margin-top: 10px; }
+            .brand-header { justify-content: space-between; align-items: center; flex-wrap: nowrap; }
+            .brand-title-center { position: static; transform: none; flex: 1; text-align: center; font-size: 1.4rem; letter-spacing: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 0.2rem; }
+            .brand-lang-wrap { flex-shrink: 0; margin-left: 0.3rem; }
         }
-
         @media (max-width:400px) {
-            .brand-title-center {
-                font-size: 1.1rem;
-                letter-spacing: 1px;
-            }
-            .brand-lang-wrap select {
-                font-size: 0.7rem;
-                min-width: 50px;
-                padding: 0.15rem 1.4rem 0.15rem 0.4rem;
-            }
-            .brand-logo-area img {
-                height: 42px;
-            }
+            .brand-title-center { font-size: 1.1rem; letter-spacing: 1px; }
+            .brand-lang-wrap select { font-size: 0.7rem; min-width: 50px; padding: 0.15rem 1.4rem 0.15rem 0.4rem; }
+            .brand-logo-area img { height: 42px; }
         }
-
         @media (min-width:601px) and (max-width:1000px) {
-            .character-left,
-            .character-right {
-                width: 140px;
-            }
-            .story-area {
-                font-size: 1rem;
-            }
-            .scroll-poem {
-                font-size: 2rem;
-            }
-            .ending-panel .ending-body {
-                font-size: 1.1rem;
-            }
-            .brand-title-center {
-                font-size: 2.6rem;
-                letter-spacing: 8px;
-            }
-            .brand-logo-area img {
-                height: 80px;
-            }
+            .character-left, .character-right { width: 140px; }
+            .story-area { font-size: 1rem; }
+            .scroll-poem { font-size: 2rem; }
+            .ending-panel .ending-body { font-size: 1.1rem; }
+            .brand-title-center { font-size: 2.6rem; letter-spacing: 8px; }
+            .brand-logo-area img { height: 80px; }
         }
     </style>
 </head>
@@ -1327,7 +1046,6 @@
                 <select id="ageSelect">
                     <option value="under9" id="ageUnder9">9岁以下 / Under 9 / Moins de 9 ans</option>
                     <option value="9-12" selected id="age912">9-12岁 / 9-12 / 9-12 ans</option>
-                    <option value="over12" id="ageOver12">12岁以上 / Over 12 / Plus de 12 ans</option>
                 </select>
                 <div class="consent-area">
                     <input type="checkbox" id="consentCheck" />
@@ -1428,6 +1146,7 @@
         let autoPlayEnabled = false;
         let scrollTimer = null;
         let autoPlayTimer = null;
+        let sceneAudioPending = false;   // 👈 新增：标记场景配音是否需要等待弹窗结束后播放
 
         let playerChoices = {
             node0_culture_pre: '',
@@ -1463,7 +1182,6 @@
         const bgWind = document.getElementById('bgWind');
         let consentInfoLink = null;
 
-        // 品牌页
         const brandPage = document.getElementById('brandPage');
         const brandLangSelect = document.getElementById('brandLangSelect');
         const brandEnterBtn = document.getElementById('brandEnterBtn');
@@ -1477,12 +1195,10 @@
         const popupContent = document.getElementById('popupContent');
         const closeQuestionPopup = document.getElementById('closeQuestionPopup');
 
-        // 表单多语言元素
         const formTitle = document.getElementById('formTitle');
         const ageLabel = document.getElementById('ageLabel');
         const ageUnder9 = document.getElementById('ageUnder9');
         const age912 = document.getElementById('age912');
-        const ageOver12 = document.getElementById('ageOver12');
         const consentLabel = document.getElementById('consentLabel');
         const privacyNote = document.getElementById('privacyNote');
 
@@ -1506,49 +1222,19 @@
             q2Label: { zh: '为什么是互动有声剧？', en: 'Why an interactive audio drama?', fr: 'Pourquoi un théâtre audio interactif ?' },
             q3Label: { zh: '我们能提供什么？', en: 'What can we provide?', fr: 'Ce que nous proposons' },
             q1Content: {
-                zh: `你可以把它理解为一个"由声音和选择构成的叙事体验"。
-
-        与传统有声书不同——你不只是听，还要在关键情节节点做出选择。这些选择会影响故事走向，让你从旁观者变成参与者。你不需要看屏幕，不需要操作复杂界面，只需要跟随文字与引导进入场景，然后在需要的时候，凭直觉做出选择。
-
-        我们正在为这个故事录制专业配音，目前版本以文字叙事方式呈现，完整声音体验将于近期上线。`,
-                en: `You can think of it as a "narrative experience made of sound and choices."
-
-        Unlike a traditional audiobook—you are not just listening; you also make choices at key plot points. These choices will influence the course of the story, turning you from a spectator into a participant. You don't need to look at a screen or navigate a complex interface. Just follow the text and guidance to enter the scene, and when the time comes, make a choice based on your intuition.
-
-        We are currently recording professional voice acting for this story. The current version is presented in text narrative form, and the full audio experience will be available soon.`,
-                fr: `Vous pouvez l'imaginer comme une « expérience narrative faite de sons et de choix ».
-
-        Contrairement à un livre audio traditionnel, vous ne faites pas qu'écouter : vous devez aussi faire des choix à des moments clés de l'intrigue. Ces choix influenceront le déroulement de l'histoire, vous transformant de spectateur en participant. Vous n'avez pas besoin de regarder un écran ni de naviguer sur une interface complexe. Suivez simplement le texte et les indications pour entrer dans la scène, puis, au moment voulu, faites un choix intuitif.
-
-        Nous enregistrons actuellement des voix professionnelles pour cette histoire. La version actuelle est présentée sous forme de narration textuelle, et l'expérience sonore complète sera disponible prochainement.`
+                zh: `你可以把它理解为一个"由声音和选择构成的叙事体验"。\n\n与传统有声书不同——你不只是听，还要在关键情节节点做出选择。这些选择会影响故事走向，让你从旁观者变成参与者。你不需要看屏幕，不需要操作复杂界面，只需要跟随文字与引导进入场景，然后在需要的时候，凭直觉做出选择。\n\n我们正在为这个故事录制专业配音，目前版本以文字叙事方式呈现，完整声音体验将于近期上线。`,
+                en: `You can think of it as a "narrative experience made of sound and choices."\n\nUnlike a traditional audiobook—you are not just listening; you also make choices at key plot points. These choices will influence the course of the story, turning you from a spectator into a participant. You don't need to look at a screen or navigate a complex interface. Just follow the text and guidance to enter the scene, and when the time comes, make a choice based on your intuition.\n\nWe are currently recording professional voice acting for this story. The current version is presented in text narrative form, and the full audio experience will be available soon.`,
+                fr: `Vous pouvez l'imaginer comme une « expérience narrative faite de sons et de choix ».\n\nContrairement à un livre audio traditionnel, vous ne faites pas qu'écouter : vous devez aussi faire des choix à des moments clés de l'intrigue. Ces choix influenceront le déroulement de l'histoire, vous transformant de spectateur en participant. Vous n'avez pas besoin de regarder un écran ni de naviguer sur une interface complexe. Suivez simplement le texte et les indications pour entrer dans la scène, puis, au moment voulu, faites un choix intuitif.\n\nNous enregistrons actuellement des voix professionnelles pour cette histoire. La version actuelle est présentée sous forme de narration textuelle, et l'expérience sonore complète sera disponible prochainement.`
             },
             q2Content: {
-                zh: `传统文化和历史离你很遥远，但通过声音和选择，文化理解不是知识点堆砌，而是对一个世界中的人如何生活、如何思考、如何面对困境产生感知。
-
-        互动叙事提供了一种"低门槛的参与方式"：你不需要事先了解中国历史，不需要学习中文，不需要做任何准备。你只需要进入场景，倾听人物，做出选择。你的选择本身，就是一种文化回应。我们希望了解：在不同文化背景下成长的青少年，会如何理解苏轼的追问？`,
-                en: `Traditional culture and history may seem distant, but through sound and choices, cultural understanding is not about piling up facts—it's about perceiving how people in a certain world live, think, and face adversity.
-
-        Interactive narrative provides a "low-barrier way to participate": you don't need any prior knowledge of Chinese history, you don't need to learn Chinese, you don't need any preparation. You just enter the scene, listen to the characters, and make your choices. Your choice itself is a form of cultural response. We want to understand: how will young people growing up in different cultural contexts understand Su Shi's questioning?`,
-                fr: `La culture et l'histoire traditionnelles peuvent vous paraître lointaines, mais grâce au son et aux choix, comprendre une culture ne consiste pas à accumuler des connaissances, mais à percevoir comment les gens d'un monde donné vivent, pensent et font face aux difficultés.
-
-        Le récit interactif offre un « moyen de participation à faible barrière » : vous n'avez pas besoin de connaître l'histoire de la Chine, ni d'apprendre le chinois, ni de vous préparer d'aucune manière. Il vous suffit d'entrer dans la scène, d'écouter les personnages et de faire vos choix. Votre choix lui-même est une réponse culturelle. Nous souhaitons comprendre : comment les jeunes ayant grandi dans différents contextes culturels comprennent-ils le questionnement de Su Shi ?`
+                zh: `传统文化和历史离你很遥远，但通过声音和选择，文化理解不是知识点堆砌，而是对一个世界中的人如何生活、如何思考、如何面对困境产生感知。\n\n互动叙事提供了一种"低门槛的参与方式"：你不需要事先了解中国历史，不需要学习中文，不需要做任何准备。你只需要进入场景，倾听人物，做出选择。你的选择本身，就是一种文化回应。我们希望了解：在不同文化背景下成长的青少年，会如何理解苏轼的追问？`,
+                en: `Traditional culture and history may seem distant, but through sound and choices, cultural understanding is not about piling up facts—it's about perceiving how people in a certain world live, think, and face adversity.\n\nInteractive narrative provides a "low-barrier way to participate": you don't need any prior knowledge of Chinese history, you don't need to learn Chinese, you don't need any preparation. You just enter the scene, listen to the characters, and make your choices. Your choice itself is a form of cultural response. We want to understand: how will young people growing up in different cultural contexts understand Su Shi's questioning?`,
+                fr: `La culture et l'histoire traditionnelles peuvent vous paraître lointaines, mais grâce au son et aux choix, comprendre une culture ne consiste pas à accumuler des connaissances, mais à percevoir comment les gens d'un monde donné vivent, pensent et font face aux difficultés.\n\nLe récit interactif offre un « moyen de participation à faible barrière » : vous n'avez pas besoin de connaître l'histoire de la Chine, ni d'apprendre le chinois, ni de vous préparer d'aucune manière. Il vous suffit d'entrer dans la scène, d'écouter les personnages et de faire vos choix. Votre choix lui-même est une réponse culturelle. Nous souhaitons comprendre : comment les jeunes ayant grandi dans différents contextes culturels comprennent-ils le questionnement de Su Shi ?`
             },
             q3Content: {
-                zh: `1. 一段完整的互动叙事：大约5-8分钟，围绕苏轼与两个少年的相遇展开，由场景文字与引导提示构成完整体验。
-
-        2. 几个需要你决定的关键节点：不是测试，不需要猜"正确答案"，只需要按你的直觉选择。
-
-        3. 一次匿名的文化记录：本活动是上海外国语大学社会实践项目的一部分。你的选择将以匿名方式纳入调研数据，帮助我们理解：什么样的文化叙事方式，更容易在不同文化背景的人群中产生共鸣。所有数据仅用于学术研究，不涉及任何商业用途。`,
-                en: `1. A complete interactive narrative: About 5–8 minutes, built around the encounter between Su Shi and two young people, with scene text and guided prompts forming a complete experience.
-
-        2. Several key points where you need to decide: This is not a test; there is no need to guess the "right answer." Just choose based on your intuition.
-
-        3. An anonymous cultural record: This activity is part of a social practice project at Shanghai International Studies University. Your choices will be anonymously included in our research data, helping us understand what kind of cultural narrative resonates more easily with people from different cultural backgrounds. All data is used for academic research only and involves no commercial use.`,
-                fr: `1. Un récit interactif complet : D'une durée d'environ 5 à 8 minutes, il s'articule autour de la rencontre entre Su Shi et deux jeunes, les textes de scène et les indications guidées constituant une expérience à part entière.
-
-        2. Plusieurs moments clés où vous devez décider : Il ne s'agit pas d'un test, inutile de deviner la « bonne réponse ». Faites simplement votre choix de manière intuitive.
-
-        3. Un enregistrement culturel anonyme : Cette activité fait partie d'un projet de pratique sociale de l'Université des Études internationales de Shanghai. Vos choix seront intégrés de manière anonyme dans nos données de recherche, nous aidant à comprendre quel type de narration culturelle résonne le plus facilement auprès de personnes issus de différents horizons culturels. Toutes les données sont utilisées exclusivement à des fins de recherche universitaire et ne font l'objet d'aucune utilisation commerciale.`
+                zh: `1. 一段完整的互动叙事：大约5-8分钟，围绕苏轼与两个少年的相遇展开，由场景文字与引导提示构成完整体验。\n\n2. 几个需要你决定的关键节点：不是测试，不需要猜"正确答案"，只需要按你的直觉选择。\n\n3. 一次匿名的文化记录：本活动是上海外国语大学社会实践项目的一部分。你的选择将以匿名方式纳入调研数据，帮助我们理解：什么样的文化叙事方式，更容易在不同文化背景的人群中产生共鸣。所有数据仅用于学术研究，不涉及任何商业用途。`,
+                en: `1. A complete interactive narrative: About 5–8 minutes, built around the encounter between Su Shi and two young people, with scene text and guided prompts forming a complete experience.\n\n2. Several key points where you need to decide: This is not a test; there is no need to guess the "right answer." Just choose based on your intuition.\n\n3. An anonymous cultural record: This activity is part of a social practice project at Shanghai International Studies University. Your choices will be anonymously included in our research data, helping us understand what kind of cultural narrative resonates more easily with people from different cultural backgrounds. All data is used for academic research only and involves no commercial use.`,
+                fr: `1. Un récit interactif complet : D'une durée d'environ 5 à 8 minutes, il s'articule autour de la rencontre entre Su Shi et deux jeunes, les textes de scène et les indications guidées constituant une expérience à part entière.\n\n2. Plusieurs moments clés où vous devez décider : Il ne s'agit pas d'un test, inutile de deviner la « bonne réponse ». Faites simplement votre choix de manière intuitive.\n\n3. Un enregistrement culturel anonyme : Cette activité fait partie d'un projet de pratique sociale de l'Université des Études internationales de Shanghai. Vos choix seront intégrés de manière anonyme dans nos données de recherche, nous aidant à comprendre quel type de narration culturelle résonne le plus facilement auprès de personnes issus de différents horizons culturels. Toutes les données sont utilisées exclusivement à des fins de recherche universitaire et ne font l'objet d'aucune utilisation commerciale.`
             },
             brandEnter: { zh: '进入体验', en: 'Enter', fr: 'Entrer' },
             formTitle: { zh: '📜 游历之前，请留下印记', en: '📜 Before your journey, leave a mark',
@@ -1556,7 +1242,6 @@
             ageLabel: { zh: '你今年几岁？', en: 'How old are you?', fr: 'Quel âge as-tu ?' },
             ageUnder9: { zh: '9岁以下', en: 'Under 9', fr: 'Moins de 9 ans' },
             age912: { zh: '9-12岁', en: '9-12', fr: '9-12 ans' },
-            ageOver12: { zh: '12岁以上', en: 'Over 12', fr: 'Plus de 12 ans' },
             consentLabel: { zh: '我已阅读并同意 {link}', en: 'I have read and agree to {link}', fr: 'J\'ai lu et j\'accepte {link}' },
             consentInfoTitle: { zh: '信息采集说明', en: 'Data Collection Policy', fr: 'Politique de collecte de données' },
             privacyNote: { zh: '仅收集匿名统计数据，用于优化游戏体验', en: 'Anonymous statistics only, to improve the experience',
@@ -1582,15 +1267,12 @@
             if (btnText) btnText.textContent = t(uiTexts.brandEnter);
         }
 
-        // ===== 更新界面文字 =====
         function updateUITexts() {
             updateBrandPage();
             formTitle.textContent = t(uiTexts.formTitle);
             ageLabel.textContent = t(uiTexts.ageLabel);
             ageUnder9.textContent = t(uiTexts.ageUnder9);
             age912.textContent = t(uiTexts.age912);
-            ageOver12.textContent = t(uiTexts.ageOver12);
-
             const linkText = t(uiTexts.consentInfoTitle);
             const labelText = t(uiTexts.consentLabel);
             consentLabel.innerHTML = labelText.replace(/\{link\}/g, `<span class="info-link" id="consentInfoLink">${linkText}</span>`);
@@ -1598,7 +1280,6 @@
             if (consentInfoLink) {
                 consentInfoLink.addEventListener('click', showConsentInfo);
             }
-
             privacyNote.textContent = t(uiTexts.privacyNote);
             enterGameBtn.textContent = t(uiTexts.enterGame);
             autoPlayBtn.textContent = autoPlayEnabled ? t(uiTexts.autoPlaying) : t(uiTexts.autoPlay);
@@ -1606,83 +1287,17 @@
             routeTag.textContent = t(uiTexts.routeTag);
         }
 
-        // ===== 信息采集说明 =====
         function showConsentInfo() {
             const lang = currentLang;
             const info = {
-                zh: `尊敬的参与者，
-
-        在您开始本次体验之前，请知悉以下信息：
-
-        【调研目的】
-        本次互动有声剧体验是上海外国语大学"沪声沪色"项目组开展的一项社会实践研究，旨在了解青少年对红色文化、江南文化、海派文化的认知现状、接受障碍与传播规律。您的参与将帮助我们更好地理解青少年群体对传统文化的感知方式，为本土文化的创造性传播提供实证依据。
-
-        【数据采集内容】
-        体验过程中，系统将自动记录以下信息：
-        1. 您对文化符号的前置认知情况
-        2. 您在剧情交互节点中的选择偏好
-        3. 您对江南文化相关体验的感知反馈
-
-        【数据使用与隐私保护】
-        项目组承诺，所有采集数据仅用于学术研究与调研报告撰写，不作任何商业用途。
-        数据以匿名化方式存储，不收集您的姓名、联系方式等个人身份信息。
-        您有权随时退出体验，退出后数据将不被纳入分析。
-
-        请注意，参与即代表同意以上内容。
-        点击"开始体验"即代表您已阅读并同意以上说明。
-
-        如有任何疑问，请联系项目组：laterlater002@qq.com`,
-
-                en: `Dear participant,
-
-        Before you begin this experience, please be informed of the following:
-
-        [Research Purpose]
-        This interactive audio drama experience is a social practice study conducted by the "Hu Sheng Hu Se" (Shanghai Sound and Color) project team of Shanghai International Studies University. It aims to understand adolescents' current awareness, acceptance barriers, and dissemination patterns regarding red culture, Jiangnan culture, and Haipai (Shanghai-style) culture. Your participation will help us better understand how young people perceive traditional culture and provide empirical evidence for the creative dissemination of local culture.
-
-        [Data Collected]
-        During the experience, the system will automatically record the following information:
-        1. Your prior knowledge of cultural symbols.
-        2. Your choice preferences at interactive narrative nodes.
-        3. Your perceptual feedback on experiences related to Jiangnan culture.
-
-        [Data Use and Privacy Protection]
-        The project team undertakes that all collected data will be used solely for academic research and survey report writing, and will not be used for any commercial purpose.
-        Data will be stored anonymously; no personal identifying information such as your name or contact details will be collected.
-        You have the right to withdraw from the experience at any time. Data from participants who withdraw will not be included in the analysis.
-
-        Please note that participation implies your consent to the above.
-        By clicking "Start Experience", you confirm that you have read and agree to the above statement.
-
-        If you have any questions, please contact the project team at: laterlater002@qq.com`,
-
-                fr: `Cher(e) participant(e),
-
-        Avant de commencer cette expérience, veuillez prendre connaissance des informations suivantes :
-
-        [Objectif de l'étude]
-        Cette expérience de théâtre audio interactif est une étude de pratique sociale menée par l'équipe du projet « Hu Sheng Hu Se » (Son et Couleur de Shanghai) de l'Université des Études Internationales de Shanghai. Elle vise à comprendre l'état actuel des connaissances, les obstacles à l'acceptation et les modes de diffusion, chez les jeunes, des cultures rouge, du Jiangnan et de style shanghaïen (Haipai). Votre participation nous aidera à mieux cerner la manière dont les jeunes perçoivent la culture traditionnelle et fournira des bases empiriques pour une diffusion créative de la culture locale.
-
-        [Contenu des données collectées]
-        Pendant l'expérience, le système enregistrera automatiquement les informations suivantes :
-        1. Votre connaissance préalable des symboles culturels.
-        2. Vos préférences de choix aux nœuds interactifs du récit.
-        3. Vos retours de perception concernant les expériences liées à la culture du Jiangnan.
-
-        [Utilisation des données et protection de la vie privée]
-        L'équipe du projet s'engage à utiliser toutes les données collectées exclusivement à des fins de recherche académique et de rédaction de rapports d'étude, et en aucun cas à des fins commerciales.
-        Les données sont stockées de manière anonyme ; aucune information personnelle identifiante, telle que votre nom ou vos coordonnées, n'est collectée.
-        Vous avez le droit de vous retirer de l'expérience à tout moment. Les données des participants qui se retirent ne seront pas incluses dans l'analyse.
-
-        Veuillez noter que la participation vaut acceptation des conditions ci-dessus.
-        En cliquant sur « Commencer l'expérience », vous confirmez avoir lu et accepté les présentes conditions.
-
-        Pour toute question, veuillez contacter l'équipe du projet : laterlater002@qq.com`
+                zh: `尊敬的参与者，\n\n在您开始本次体验之前，请知悉以下信息：\n\n【调研目的】\n本次互动有声剧体验是上海外国语大学"沪声沪色"项目组开展的一项社会实践研究，旨在了解青少年对红色文化、江南文化、海派文化的认知现状、接受障碍与传播规律。您的参与将帮助我们更好地理解青少年群体对传统文化的感知方式，为本土文化的创造性传播提供实证依据。\n\n【数据采集内容】\n体验过程中，系统将自动记录以下信息：\n1. 您对文化符号的前置认知情况\n2. 您在剧情交互节点中的选择偏好\n3. 您对江南文化相关体验的感知反馈\n\n【数据使用与隐私保护】\n项目组承诺，所有采集数据仅用于学术研究与调研报告撰写，不作任何商业用途。\n数据以匿名化方式存储，不收集您的姓名、联系方式等个人身份信息。\n您有权随时退出体验，退出后数据将不被纳入分析。\n\n请注意，参与即代表同意以上内容。\n点击"开始体验"即代表您已阅读并同意以上说明。\n\n如有任何疑问，请联系项目组：laterlater002@qq.com`,
+                en: `Dear participant,\n\nBefore you begin this experience, please be informed of the following:\n\n[Research Purpose]\nThis interactive audio drama experience is a social practice study conducted by the "Hu Sheng Hu Se" (Shanghai Sound and Color) project team of Shanghai International Studies University. It aims to understand adolescents' current awareness, acceptance barriers, and dissemination patterns regarding red culture, Jiangnan culture, and Haipai (Shanghai-style) culture. Your participation will help us better understand how young people perceive traditional culture and provide empirical evidence for the creative dissemination of local culture.\n\n[Data Collected]\nDuring the experience, the system will automatically record the following information:\n1. Your prior knowledge of cultural symbols.\n2. Your choice preferences at interactive narrative nodes.\n3. Your perceptual feedback on experiences related to Jiangnan culture.\n\n[Data Use and Privacy Protection]\nThe project team undertakes that all collected data will be used solely for academic research and survey report writing, and will not be used for any commercial purpose.\nData will be stored anonymously; no personal identifying information such as your name or contact details will be collected.\nYou have the right to withdraw from the experience at any time. Data from participants who withdraw will not be included in the analysis.\n\nPlease note that participation implies your consent to the above.\nBy clicking "Start Experience", you confirm that you have read and agree to the above statement.\n\nIf you have any questions, please contact the project team at: laterlater002@qq.com`,
+                fr: `Cher(e) participant(e),\n\nAvant de commencer cette expérience, veuillez prendre connaissance des informations suivantes :\n\n[Objectif de l'étude]\nCette expérience de théâtre audio interactif est une étude de pratique sociale menée par l'équipe du projet « Hu Sheng Hu Se » (Son et Couleur de Shanghai) de l'Université des Études Internationales de Shanghai. Elle vise à comprendre l'état actuel des connaissances, les obstacles à l'acceptation et les modes de diffusion, chez les jeunes, des cultures rouge, du Jiangnan et de style shanghaïen (Haipai). Votre participation nous aidera à mieux cerner la manière dont les jeunes perçoivent la culture traditionnelle et fournira des bases empiriques pour une diffusion créative de la culture locale.\n\n[Contenu des données collectées]\nPendant l'expérience, le système enregistrera automatiquement les informations suivantes :\n1. Votre connaissance préalable des symboles culturels.\n2. Vos préférences de choix aux nœuds interactifs du récit.\n3. Vos retours de perception concernant les expériences liées à la culture du Jiangnan.\n\n[Utilisation des données et protection de la vie privée]\nL'équipe du projet s'engage à utiliser toutes les données collectées exclusivement à des fins de recherche académique et de rédaction de rapports d'étude, et en aucun cas à des fins commerciales.\nLes données sont stockées de manière anonyme ; aucune information personnelle identifiante, telle que votre nom ou vos coordonnées, n'est collectée.\nVous avez le droit de vous retirer de l'expérience à tout moment. Les données des participants qui se retirent ne seront pas incluses dans l'analyse.\n\nVeuillez noter que la participation vaut acceptation des conditions ci-dessus.\nEn cliquant sur « Commencer l'expérience », vous confirmez avoir lu et accepté les présentes conditions.\n\nPour toute question, veuillez contacter l'équipe du projet : laterlater002@qq.com`
             };
             alert(info[lang] || info.zh);
         }
 
-        // ===== 显示问题浮窗（定位在触发元素上方或下方） =====
+        // ===== 显示问题浮窗 =====
         let currentTriggerElement = null;
 
         function showQuestionPopup(qIndex, triggerElement) {
@@ -2309,29 +1924,45 @@
 
         // ===== 辅助函数 =====
         function playAudio(audioId, onEndCallback) {
-            if (currentAudio) { currentAudio.pause();
+            if (currentAudio) {
+                currentAudio.pause();
                 currentAudio.currentTime = 0;
-                currentAudio = null; }
-            const extension = (audioId === 'wind') ? '.mp3' : '.MP3';
+                currentAudio = null;
+            }
+            let extension = '.m4a';
+            if (audioId === 'wind') extension = '.mp3';
             const audio = new Audio(`sounds/${audioId}${extension}`);
             audio.preload = 'auto';
-            audio.onerror = () => console.log(`音频不存在`);
-            audio.onended = () => { if (onEndCallback) onEndCallback(); if (currentAudio === audio) currentAudio = null; };
+            audio.onerror = () => console.log(`音频不存在: sounds/${audioId}${extension}`);
+            audio.onended = () => {
+                if (onEndCallback) onEndCallback();
+                if (currentAudio === audio) currentAudio = null;
+            };
             audio.play().catch(e => console.log('音频播放失败', e));
             currentAudio = audio;
         }
 
-        function cancelAllSpeech() { if (currentAudio) { currentAudio.pause();
+        function cancelAllSpeech() {
+            if (currentAudio) {
+                currentAudio.pause();
                 currentAudio.currentTime = 0;
-                currentAudio = null; } }
+                currentAudio = null;
+            }
+        }
 
-        function hideInteractions() { optionsDiv.style.display = 'none';
-            continueBtn.classList.add('hidden'); }
+        function hideInteractions() {
+            optionsDiv.style.display = 'none';
+            continueBtn.classList.add('hidden');
+        }
 
         function restoreInteractions(scene) {
-            if (scene.options && scene.options.length === 1) { optionsDiv.style.display = 'none';
-                continueBtn.classList.remove('hidden'); } else { optionsDiv.style.display = 'flex';
-                continueBtn.classList.add('hidden'); }
+            if (scene.options && scene.options.length === 1) {
+                optionsDiv.style.display = 'none';
+                continueBtn.classList.remove('hidden');
+            } else {
+                optionsDiv.style.display = 'flex';
+                continueBtn.classList.add('hidden');
+            }
         }
 
         function typeWriter(paragraphElements, paragraphsText, speed = 30, callback) {
@@ -2380,15 +2011,19 @@
             if (type === 'figure') content = figureData[id];
             else if (type === 'knowledge') content = knowledgeData[id];
             if (!content) return;
+
             popupTriggered = true;
             completeTyping();
             cancelAllSpeech();
             clearAutoPlayTimer();
+
             const existing = document.querySelector('.popup-card');
             if (existing) existing.remove();
+
             const popup = document.createElement('div');
             popup.className = 'popup-card';
             let innerHtml = `<span class="close-icon" id="closePopup">✕</span>`;
+
             if (type === 'figure') {
                 innerHtml += `<h3>${t(content.name)} (${content.years})</h3>
                               <div class="sub">${t(content.desc)}</div>`;
@@ -2401,16 +2036,30 @@
             } else if (type === 'knowledge') {
                 innerHtml += `<h3>${t(content.title)}</h3><div>${t(content.content)}</div>`;
             }
+
             popup.innerHTML = innerHtml;
             popupOverlay.innerHTML = '';
             popupOverlay.appendChild(popup);
             popupOverlay.classList.add('active');
             hideInteractions();
+
+            // 关闭按钮
             document.getElementById('closePopup').addEventListener('click', function(e) {
                 e.stopPropagation();
                 cancelAllSpeech();
                 closePopupAndContinue();
             });
+
+            // 点击遮罩关闭
+            popupOverlay.addEventListener('click', function(e) {
+                if (e.target === popupOverlay) {
+                    cancelAllSpeech();
+                    closePopupAndContinue();
+                }
+            });
+
+            // 播放弹窗对应的音频
+            playAudio(id, closePopupAndContinue);
         }
 
         function closePopupAndContinue() {
@@ -2419,10 +2068,17 @@
             popupOverlay.innerHTML = '';
             const scene = scenes[currentSceneId];
             if (scene) restoreInteractions(scene);
+
+            // 👇 检查是否有待播放的场景配音
             if (popupQueue.length > 0) {
                 const next = popupQueue.shift();
                 showPopup(next.type, next.id);
             } else {
+                // 所有弹窗已关闭，如果有场景配音待播放则播放
+                if (sceneAudioPending && currentSceneId && scene && scene.type !== 'scroll' && scene.type !== 'ending') {
+                    sceneAudioPending = false;
+                    playAudio(currentSceneId);
+                }
                 if (autoPlayEnabled) scheduleAutoPlay();
             }
             adjustCharacterPosition();
@@ -2615,6 +2271,9 @@
 
         // ===== 核心显示函数 =====
         function displayScene(sceneId) {
+            // 重置场景配音待播放标志
+            sceneAudioPending = false;
+
             if (currentSceneId && currentSceneId !== sceneId) {
                 recordSceneDuration(currentSceneId);
             }
@@ -2681,10 +2340,26 @@
                 storyDiv.appendChild(p);
                 paraElements.push(p);
             });
-            typeWriter(paraElements, plainTexts, 30, () => {});
+
+            // 打字机效果 + 配音播放
+            typeWriter(paraElements, plainTexts, 30, () => {
+                // 如果场景有弹窗，暂时不播放场景配音，等待弹窗处理
+                if (scene.popup) {
+                    // 有弹窗 → 标记待播放，等弹窗队列清空后再播放
+                    sceneAudioPending = true;
+                } else {
+                    // 没有弹窗 → 立即播放场景配音
+                    if (scene.type !== 'scroll' && scene.type !== 'ending') {
+                        playAudio(sceneId);
+                    }
+                    sceneAudioPending = false;
+                }
+            });
+
             optionsDiv.innerHTML = '';
             continueBtn.classList.add('hidden');
 
+            // 特殊处理卷轴场景
             if (scene.type === 'scroll') {
                 storyDiv.innerHTML = '';
                 showScroll(scene);
@@ -2693,6 +2368,7 @@
                 return;
             }
 
+            // 处理 checkbox 类型
             if (scene.type === 'checkbox') {
                 optionsDiv.style.display = 'flex';
                 const container = document.createElement('div');
@@ -2803,6 +2479,7 @@
                 optionsDiv.appendChild(container);
                 setTimeout(() => { if (autoPlayEnabled) scheduleAutoPlay(); }, 100);
             } else {
+                // 普通场景（只有继续按钮或多个选项）
                 if (scene.options && scene.options.length === 1) {
                     optionsDiv.style.display = 'none';
                     continueBtn.classList.remove('hidden');
@@ -2836,6 +2513,7 @@
                 }
             }
 
+            // 处理弹出框（知识卡片/人物卡片）
             if (scene.popup) {
                 let items = [];
                 if (Array.isArray(scene.popup)) items = scene.popup;
@@ -2901,6 +2579,7 @@
             currentParagraphTexts = [];
             popupQueue = [];
             autoPlayEnabled = false;
+            sceneAudioPending = false;
             autoPlayBtn.textContent = t(uiTexts.autoPlay);
 
             document.querySelector('.top-section').style.display = 'block';
