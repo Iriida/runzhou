@@ -1122,7 +1122,7 @@
         <div id="brandPage">
             <div class="brand-header">
                 <div class="brand-logo-area">
-                    <img src="images/logo.jpg" alt="沪声沪色" id="brandLogo" onerror="this.style.display='none'" />
+                    <img alt="沪声沪色" id="brandLogo" onerror="this.style.display='none'" />
                 </div>
                 <div class="brand-title-center">沪声沪色</div>
                 <div class="brand-lang-wrap">
@@ -1186,7 +1186,7 @@
         </div>
 
         <!-- ===== 音效 ===== -->
-        <audio id="bgWind" loop preload="auto" style="display:none;"><source src="sounds/wind.mp3"></audio>
+        <audio id="bgWind" loop preload="auto" style="display:none;"></audio>
 
         <!-- ===== 游戏内浮窗 ===== -->
         <div class="popup-overlay" id="popupOverlay"></div>
@@ -1247,11 +1247,86 @@
     </div>
 
     <script>
+        // ===== CDN 配置 =====
+        // 所有图片 / 音频通过 jsDelivr 代理，国内访问更快
+        // 如果仓库默认分支不是 main，把 @main 改成 @master
+        // 如果要回退到 GitHub Pages 直连，把 CDN_BASE 改成空字符串 ''
+        const CDN_BASE = 'https://cdn.jsdelivr.net/gh/iriida/runzhou_new@main/';
+        const asset = p => (CDN_BASE && !/^https?:/i.test(p)) ? CDN_BASE + p : p;
+
         // ===== Supabase 配置 =====
         const SUPABASE_URL = 'https://qdrxorpgezczohttqafw.supabase.co';
         const SUPABASE_ANON_KEY =
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkcnhvcnBnZXpjem9odHRxYWZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTg3MzQsImV4cCI6MjA5OTY3NDczNH0.uoAyKg2OW5_TaNTYq3Q6bIUplku6pwWJ_oF7IBWOojY';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ===== 资源预加载 =====
+        // 两种模式：
+        //   1. 切换场景时预加载「下一个场景」的背景 / 立绘 / 音频（优先）
+        //   2. 游戏开始后延迟 3 秒，在浏览器空闲时静默加载剩余全部资源
+        const preloader = {
+            loaded: new Set(),
+            keepAlive: [],
+            load(url) {
+                if (!url || this.loaded.has(url)) return Promise.resolve();
+                this.loaded.add(url);
+                const isAudio = /\.(mp3|m4a|ogg|wav)$/i.test(url);
+                return new Promise(resolve => {
+                    if (isAudio) {
+                        const a = new Audio();
+                        a.preload = 'auto';
+                        a.oncanplaythrough = () => resolve();
+                        a.onerror = () => resolve();
+                        a.src = url;
+                        this.keepAlive.push(a);
+                    } else {
+                        const img = new Image();
+                        img.onload = () => resolve();
+                        img.onerror = () => resolve();
+                        img.src = url;
+                        this.keepAlive.push(img);
+                    }
+                });
+            },
+            loadScene(sceneId) {
+                const scene = scenes[sceneId];
+                if (!scene) return;
+                if (scene.bg) this.load(asset(scene.bg));
+                this.load(asset(`sounds/${sceneId}.m4a`));
+                if (scene.leftChar) this.load(asset(scene.leftChar.image));
+                if (scene.rightChar) this.load(asset(scene.rightChar.image));
+            },
+            collectAll() {
+                const urls = new Set();
+                urls.add(asset('images/logo.jpg'));
+                urls.add(asset('sounds/wind.mp3'));
+                urls.add(asset('sounds/jinshan.m4a'));
+                Object.values(scenes).forEach(s => {
+                    if (s.bg) urls.add(asset(s.bg));
+                    if (s.leftChar) urls.add(asset(s.leftChar.image));
+                    if (s.rightChar) urls.add(asset(s.rightChar.image));
+                });
+                Object.keys(scenes).forEach(id => {
+                    urls.add(asset(`sounds/${id}.m4a`));
+                });
+                return [...urls];
+            },
+            startBackground() {
+                const all = this.collectAll();
+                let i = 0;
+                const next = () => {
+                    if (i >= all.length) return;
+                    this.load(all[i++]).then(() => {
+                        if ('requestIdleCallback' in window) {
+                            requestIdleCallback(next, { timeout: 1500 });
+                        } else {
+                            setTimeout(next, 200);
+                        }
+                    });
+                };
+                next();
+            }
+        };
 
         // ===== 全局变量 =====
         let currentLang = 'zh';
@@ -1531,7 +1606,6 @@
                     fr: 'Le tronçon méridional du Grand Canal relie le Yangzi au Qiantang. Depuis les Sui et les Tang, c\'est la grande artère de communication nord-sud. Les bourgs riverains forment le socle de la culture des villes d\'eau et le prototype réel du <i>Jour de Qingming au bord de la rivière</i>.'
                 }
             },
-            // ===== 原定胜糕已替换为白玉饼 =====
             dingsheng: {
                 title: { zh: '白玉饼', en: 'White Jade Cake', fr: 'Galette de jade blanc' },
                 content: {
@@ -1825,7 +1899,6 @@
                 leftChar: null,
                 rightChar: { name: { zh: '苏轼', en: 'Su Shi', fr: 'Su Shi' }, image: 'images/sushi.png' }
             },
-            // ===== 场景 s20 和 s21 已改为白玉饼 =====
             s20: {
                 text: { zh: '王掌柜从柜台后走出，端着一碟茶点：老先生，这是小店送您的。新做的白玉饼，尝尝。', en: 'Owner Wang stepped out from behind the counter, holding a plate of tea snacks: Master Su, a small gift from our teahouse. Fresh White Jade Cakes, please try.',
                     fr: 'Le patron Wang sortit de derrière le comptoir, portant une assiette de douceurs : Maître Su, un petit présent de notre maison. Des galettes de jade blanc toutes fraîches, goûtez-les.' },
@@ -1837,7 +1910,7 @@
                 bg: 'images/teahouse.jpg'
             },
             s21: {
-                text: { zh: '白玉饼……这饼皮薄馅鲜，江南人叫它“烂面饼”。中秋时当团圆饼吃，小孩百日外婆家要送来，说是“拍屁股”，一拍就坐得稳了。江南人过日子，连一块饼都有讲头。', en: 'White Jade Cakes... thin skin and savory filling, Jiangnan people call them "soft-dough cakes." At Mid-Autumn they serve them as Reunion Cakes; when a baby turns a hundred days, the grandmother’s family sends them, saying "pat the bottom" so the baby will sit steady. Jiangnan folk have a story in everything, even a cake.',
+                text: { zh: '白玉饼……这饼皮薄馅鲜，江南人叫它“烂面饼”。中秋时当团圆饼吃，小孩百日外婆家要送来，说是“拍屁股”，一拍就坐得稳了。江南人过日子，连一块饼都有讲头。', en: 'White Jade Cakes... thin skin and savory filling, Jiangnan people call them "soft-dough cakes." At Mid-Autumn they serve them as Reunion Cakes; when a baby turns a hundred days, the grandmother\'s family sends them, saying "pat the bottom" so the baby will sit steady. Jiangnan folk have a story in everything, even a cake.',
                     fr: 'Galettes de jade blanc... une pâte fine et une farce savoureuse. Au Jiangnan, on les appelle « galettes à pâte molle ». À la Mi-Automne, on les sert comme galettes de la réunion ; quand un bébé atteint cent jours, la famille de la grand-mère en envoie, en disant « tape sur les fesses » pour que le bébé tienne bien assis. Les gens du Jiangnan mettent du sens dans chaque chose, même dans une galette.' },
                 options: [{ text: { zh: '继续...', en: 'Continue...', fr: 'Continuer...' }, nextScene: 's22' }],
                 leftChar: null,
@@ -2060,14 +2133,24 @@
             }
             let extension = '.m4a';
             if (audioId === 'wind') extension = '.mp3';
-            const audio = new Audio(`sounds/${audioId}${extension}`);
+            const audio = new Audio(asset(`sounds/${audioId}${extension}`));
             audio.preload = 'auto';
-            audio.onerror = () => console.log(`音频不存在: sounds/${audioId}${extension}`);
+            audio.onerror = () => {
+                console.log(`音频不存在: sounds/${audioId}${extension}`);
+                // 如果音频加载失败，立即触发结束回调，避免流程卡死
+                if (onEndCallback) onEndCallback();
+                if (currentAudio === audio) currentAudio = null;
+            };
             audio.onended = () => {
                 if (onEndCallback) onEndCallback();
                 if (currentAudio === audio) currentAudio = null;
             };
-            audio.play().catch(e => console.log('音频播放失败', e));
+            audio.play().catch(e => {
+                console.log('音频播放失败', e);
+                // 播放失败也视为结束，继续流程
+                if (onEndCallback) onEndCallback();
+                if (currentAudio === audio) currentAudio = null;
+            });
             currentAudio = audio;
         }
 
@@ -2135,6 +2218,7 @@
         }
 
         // ===== 浮窗 =====
+        // 修改：捕获并保存当前场景 ID
         function showPopup(type, id) {
             let content = null;
             if (type === 'figure') content = figureData[id];
@@ -2145,6 +2229,9 @@
             completeTyping();
             cancelAllSpeech();
             clearAutoPlayTimer();
+
+            // 保存当前场景 ID 用于关闭后播放正确的场景音频
+            const sceneIdAtPopup = currentSceneId;
 
             const existing = document.querySelector('.popup-card');
             if (existing) existing.remove();
@@ -2172,36 +2259,43 @@
             popupOverlay.classList.add('active');
             hideInteractions();
 
+            // 关闭按钮和背景点击使用闭包保存的 sceneIdAtPopup
             document.getElementById('closePopup').addEventListener('click', function(e) {
                 e.stopPropagation();
                 cancelAllSpeech();
-                closePopupAndContinue();
+                closePopupAndContinue(sceneIdAtPopup);
             });
 
             popupOverlay.addEventListener('click', function(e) {
                 if (e.target === popupOverlay) {
                     cancelAllSpeech();
-                    closePopupAndContinue();
+                    closePopupAndContinue(sceneIdAtPopup);
                 }
             });
 
-            playAudio(id, closePopupAndContinue);
+            // 播放卡片音频，结束时传递保存的场景 ID
+            playAudio(id, function() {
+                closePopupAndContinue(sceneIdAtPopup);
+            });
         }
 
-        function closePopupAndContinue() {
+        // 修改：接受可选的场景 ID 参数
+        function closePopupAndContinue(forcedSceneId) {
             cancelAllSpeech();
             popupOverlay.classList.remove('active');
             popupOverlay.innerHTML = '';
-            const scene = scenes[currentSceneId];
+            // 优先使用传入的 ID，否则回退到全局 currentSceneId
+            const targetId = forcedSceneId || currentSceneId;
+            const scene = scenes[targetId];
             if (scene) restoreInteractions(scene);
 
             if (popupQueue.length > 0) {
                 const next = popupQueue.shift();
                 showPopup(next.type, next.id);
             } else {
-                if (sceneAudioPending && currentSceneId && scene && scene.type !== 'scroll' && scene.type !== 'ending') {
+                if (sceneAudioPending && targetId && scene && scene.type !== 'scroll' && scene.type !== 'ending') {
                     sceneAudioPending = false;
-                    playAudio(currentSceneId, function() {
+                    playAudio(targetId, function() {
                         if (autoPlayEnabled && scene.options && scene.options.length === 1) {
                             setTimeout(() => {
                                 if (!continueBtn.classList.contains('hidden')) {
@@ -2424,7 +2518,7 @@
             clearAutoPlayTimer();
 
             if (scene.bg) {
-                gameContainer.style.backgroundImage = `url('${scene.bg}')`;
+                gameContainer.style.backgroundImage = `url('${asset(scene.bg)}')`;
                 gameContainer.style.backgroundColor = 'transparent';
             } else {
                 gameContainer.style.backgroundImage = 'none';
@@ -2482,6 +2576,10 @@
                 showScroll(scene);
                 updateCharacters(scene.leftChar, scene.rightChar);
                 setTimeout(adjustCharacterPosition, 50);
+
+                // 预加载下一场景资源
+                const nextIdScroll = scene.nextScene;
+                if (nextIdScroll) preloader.loadScene(nextIdScroll);
                 return;
             }
 
@@ -2637,6 +2735,11 @@
 
             updateCharacters(scene.leftChar, scene.rightChar);
             setTimeout(adjustCharacterPosition, 50);
+
+            // ===== 预加载下一场景资源 =====
+            const nextId = scene.nextScene ||
+                (scene.options && scene.options[0] && scene.options[0].nextScene);
+            if (nextId) preloader.loadScene(nextId);
         }
 
         function updateCharacters(leftChar, rightChar) {
@@ -2647,12 +2750,12 @@
             const leftName = document.getElementById('charLeftName');
             const rightName = document.getElementById('charRightName');
             if (leftChar) {
-                leftImg.src = leftChar.image;
+                leftImg.src = asset(leftChar.image);
                 leftName.textContent = t(leftChar.name);
                 leftDiv.style.display = 'flex';
             } else leftDiv.style.display = 'none';
             if (rightChar) {
-                rightImg.src = rightChar.image;
+                rightImg.src = asset(rightChar.image);
                 rightName.textContent = t(rightChar.name);
                 rightDiv.style.display = 'flex';
             } else rightDiv.style.display = 'none';
@@ -2784,10 +2887,19 @@
             bgmToggle.textContent = bgmOn ? t(uiTexts.bgmOn) : t(uiTexts.bgmOff);
             routeTag.textContent = t(uiTexts.routeTag);
             displayScene('s0');
+
+            // 游戏启动后延迟 3 秒，在后台静默预加载全部资源
+            setTimeout(() => preloader.startBackground(), 3000);
         });
 
         // ===== 初始化 =====
         window.addEventListener('load', function() {
+            // 注入品牌 logo 和背景音资源地址（走 CDN）
+            const brandLogo = document.getElementById('brandLogo');
+            if (brandLogo) brandLogo.src = asset('images/logo.jpg');
+            bgWind.src = asset('sounds/wind.mp3');
+            bgWind.load();
+
             currentLang = 'zh';
             brandLangSelect.value = 'zh';
             updateUITexts();
