@@ -2310,8 +2310,8 @@
                 const next = popupQueue.shift();
                 showPopup(next.type, next.id);
             } else {
-                if (sceneAudioPending && targetId && scene && scene.type !== 'scroll' && scene.type !== 'ending') {
-                    sceneAudioPending = false;
+                // 弹窗关闭后播放当前场景音频（如果还没播过）
+                if (targetId && scene && scene.type !== 'scroll' && scene.type !== 'ending') {
                     playAudio(targetId, function() {
                         if (autoPlayEnabled && scene.options && scene.options.length === 1) {
                             setTimeout(() => {
